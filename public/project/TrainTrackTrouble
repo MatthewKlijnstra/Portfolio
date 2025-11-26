@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark-reasonable.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        /* ============================= */
+        /*             Base              */
+        /* ============================= */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #323232;
+            color: #c6c6c6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #007bff8a, #0057b3a8);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: #007bff74;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            margin-top: 50px;
+        }
+
+        .collapse {
+            margin-left: 100px;
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-item .project-info {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-item:hover .project-info {
+            transform: translateX(10px);
+        }
+
+        .dropdown-item:hover {
+            color: #959595;
+        }
+
+        .custom-color {
+            color: #008b09ba;
+        }
+
+        .custom-color:hover {
+            color: rgba(226, 2, 2, 0.451);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Horizontal Slider */
+        .image-slider {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .slider {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .slider-image {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slider-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================= */
+        /*           carousel            */
+        /* ============================= */
+        .image-slider-container {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 1%;
+            border-radius: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #1f8bef;
+            /* border-color: #2DE1C2; */
+            box-shadow: 0px 2px 15px rgba(174, 174, 174, 0.571);
+            background-color: #2b2b2bd5;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            width: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .sliding-tags-container {
+            margin: auto;
+            width: 230px;
+        }
+
+        .sliding-container-bar {
+            width: auto;
+        }
+
+        .sliding-tags {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #6f4e17a9;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+
+        .tags-wrapper {
+            display: inline-block;
+            animation: slide 10s linear infinite;
+            /* Adjust the duration as needed */
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-50.4%);
+                /* Adjust based on content */
+            }
+        }
+
+        .sliding-tags:hover .tags-wrapper {
+            animation-play-state: paused;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tagTime {
+            background-color: #5ba29a;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngine {
+            background-color: #5FA8D3;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngineIMGUnity {
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .tagEngineIMGUnreal {
+            min-width: 45px;
+            max-width: 50px;
+        }
+
+
+        .tagPlatform {
+            background-color: #1c2424;
+            color: white;
+            padding: 0px 5px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagPlatformIMG {
+            min-width: 30px;
+            max-width: 40px;
+            max-height: 30px;
+            margin: 0px;
+        }
+
+        .tagPeople {
+            background-color: #344966;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tags img {
+            vertical-align: middle;
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+        .Technique-Titel {
+            color: #4EA5D9;
+        }
+
+        .Technique-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .Technique-Text {
+            color: #dfdfdfd2;
+
+        }
+
+        .MyWork-Titel {
+            Color: #66D7D1;
+        }
+
+        .MyWork-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+
+        }
+
+        .MyWork-Text {
+            color: #dfdfdfd2;
+        }
+
+        .AboutTheGame-Titel {
+            color: #6DB1BF;
+        }
+
+        .AboutTheGame-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+
+        }
+
+        .AboutTheGame-Text {
+            color: #dfdfdfd2;
+        }
+
+        .Gallery {
+            color: #2191FB;
+        }
+
+        /* ============================= */
+        /*         Show my work          */
+        /* ============================= */
+        .work-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #324354c2;
+            padding: 0 20px;
+            /* Start with minimal padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .details-section.open {
+            max-height: 1000px;
+            background-color: rgb(109, 109, 111);
+            /* large enough for content */
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 1.1rem;
+            max-height: 300px;
+            flex: 1;
+        }
+
+        .description {
+            flex: 1;
+            text-align: left;
+        }
+
+        .Description-Titel {
+            color: #6ac4d5;
+        }
+
+        .Description-Text {
+            color: #c8c8c8;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: #007bff;
+            color: rgb(212, 212, 212);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .details-btn.active {
+            background: #007bff;
+            /* brighter active color */
+            color: rgba(245, 227, 227, 0.483);;
+        }
+
+        .details-btn:hover {
+            background: #21b300;
+        }
+
+        /* contacts */
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord copy */
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333333bd;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav center">
+                <li class="nav-item">
+                </li>
+                <a href="../index.html" class="btn btn-primary ">Back to
+                    Portfolio</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Other projects
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item">
+                                <div class="project-info">
+                                    <img src="../imgs/Floors.png">
+                                    <span class="custom-color">currently on</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="AltEgoProject.html">
+                                <div class="project-info">
+                                    <img src="../imgs/AltEgoMain.png">
+                                    <span>AltEgoProject</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="WhisSis.html">
+                                <div class="project-info">
+                                    <img src="../imgs/game_poster_edit.png">
+                                    <span>WhisSis</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="VideoReality.html">
+                                <div class="project-info">
+                                    <img src="../imgs/VideoReality.png">
+                                    <span>VideoReality</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="LittleJumper.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Platformer.png">
+                                    <span>LittleJumper</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="Kuru-Kuru.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Kuru Kuru.png">
+                                    <span>Kuru Kuru</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="DungeonShooter.html">
+                                <div class="project-info">
+                                    <img src="../imgs/DungeonShooter.png">
+                                    <span>DungeonShooter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Floors</h1>
+            <p class="translatable-text" data-key="Project-Tag">Strange hardware project</p>
+        </div>
+    </section>
+
+    <!-- Tags-->
+    <div class="sliding-container-bar">
+        <div class="sliding-tags-container">
+            <div class="sliding-tags">
+                <div class="tags-wrapper">
+                    <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/VR.png" alt="Platform Icon" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">4 Devs</span>
+                    <!-- Duplicates-->
+                    <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/VR.png" alt="Platform Icon" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">4 Devs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Section -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- My Work -->
+            <h2 class="MyWork-Titel translatable-text" data-key="MyWork">My Work</h2>
+            <div class="container">
+                <div class="work-section" id="work1">
+                    <div class="video-container" onclick="toggleDetails('details1')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/ClZr952_p-E?si=C8QsOf0Ofqn4hocn"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details1')">Show Details</button>
+                    <div class="details-section" id="details1">
+                        <div class="details-content">
+                            <div id="bpCarousel2" class="carousel slide" data-bs-ride="carousel2">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="../imgs/Snippets/Floors/AIGraph1.png" class="d-block w-100"
+                                            alt="Blueprint 1">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../imgs/Snippets/Floors/AIGraph2.png" class="d-block w-100"
+                                            alt="Blueprint 2">
+                                    </div>
+                                    <!-- Add more images as needed -->
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#bpCarousel2"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#bpCarousel2"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text">Under construction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-section" id="work2">
+                    <div class="video-container" onclick="toggleDetails('details2')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/VtJjUGBHK34?si=Nd7Nb8ivp1LGotxi"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details2')">Show Details</button>
+                    <div class="details-section" id="details2">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code class="language-csharp">using System;
+using UnityEngine;
+
+public class KeyTaskManager : MonoBehaviour
+{
+    /// summary
+    /// this script is responsible for scattering all keys
+    /// 
+    /// array with transforms must have 4 minimum
+    /// summary
+
+    [Header("SpawnPoints")]
+    [SerializeField] private Transform[] transforms;
+
+    #region --- FUNCTIONS ---
+    public void ScatterKeys(GameObject[] keys)
+    {
+        //scatter keys at random positions
+        foreach (GameObject key in keys)
+        {
+            int number = RandomPosition();
+            key.transform.position = transforms[number].position;
+            RemoveAt(ref transforms, number);
+        }
+    }
+    #endregion
+
+    #region --- ARRAY FUNCTIONS ---
+    private int RandomPosition()
+    {
+        return UnityEngine.Random.Range(0, transforms.Length);
+        //return random position for key
+    }
+
+    private void RemoveAt<T>(ref T[] _array, int index)
+    {
+        for (int _a = index; _a < _array.Length - 1; _a++)
+        {
+            // moves ellements downards
+            _array[_a] = _array[_a + 1];
+        }
+        // resize array 
+        Array.Resize(ref _array, _array.Length - 1);
+    }
+    #endregion
+}                                    </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText2"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the game -->
+            <h2 class="AboutTheGame-Titel translatable-text" data-key="AboutTheGame">About the game</h2>
+            <div class="AboutTheGame-Text-Container">
+                <div class="AboutTheGame-Text translatable-text" data-key="AboutTheGameText"> </div>
+            </div>
+
+            <!-- Technique -->
+            <h2 class="Technique-Titel translatable-text" data-key="Technique">Technique</h2>
+            <div class="Technique-Text-Container">
+                <div class="Technique-Text translatable-text" data-key="TechniqueText"> </div>
+            </div>
+
+            <!-- Gallery -->
+            <h2 class="Gallery translatable-text" data-key="Gallery">oops something whent wrong, reload the page</h2>
+            <!-- Horizontal Image Carousel -->
+            <div class="image-slider-container">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../imgs/Floors1.png" class="d-block w-100" alt="Screenshot 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/floors2.png" class="d-block w-100" alt="Screenshot 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/Floors3.png" class="d-block w-100" alt="Screenshot 3">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/Floors4.png" class="d-block w-100" alt="Screenshot 4">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleDetails(id) {
+            const section = document.getElementById(id);
+            const button = section.previousElementSibling; // assumes button is right before details
+
+            const isOpen = section.classList.toggle("open");
+            button.classList.toggle("active", isOpen);
+
+            // Optional: change button text
+            if (isOpen) {
+                button.textContent = "Hide Details";
+            } else {
+                button.textContent = "Show Details";
+            }
+        }
+
+        const translations = {
+            en: {
+                "Project-Tag": "Strange hardware project",
+                "Time-Tag-4": "4 weeks",
+                "MyWork": "My work",
+                "ShowDetails-btn": "Show Details",
+                "Description": "Description",
+                "DescriptionText2": `As seen in the code, this script scatters keys on start of the game if the task is active.
+
+                This happends trough a function that receives an array of keys. This function then proceeds to get a random position for each key and set there position to this random one.
+                
+                Random positions are made by tracking empty objects placed around the map and using there position. After one random position has been used, the array removes that one and resizes to eliminate any keys from spawning at same position.`,
+                "AboutTheGame": "About the game",
+                "AboutTheGameText": `A horror game in VR with a haptic suit that sends shivers trough your body. 
+                If you are a thrill seeker, this game is is for you. You are an employe in a contract company, you just know that they want you to be fast. They some how put a huge Timer on all floors of the building to not make you forget. Tasked to coplete chores in this odly creepy building you start to feel more creeped out the further you go up.
+                This look a like but just don't sit right. The more you go up, the more you begin to see....`,
+                "Technique": "Technique",
+                "TechniqueText": `As mentioned, the game is played in vr and also in combination with a haptic suit. We developed with the tacsuit X16, but furtunatly the X40 is also compatible. Expansion for extra gear is also possibly and requires few adjustments in the bhaptics software. Any VR headset that is capable of conecting to a pc Is capable to work, just check if the quality is still good. We put some great art in it and also some post procecing to.`,
+                "Gallery": "Gallery",
+            },
+            nl: {
+                "Project-Tag": "Vreemde hardware project",
+                "Time-Tag-4": "4 weken",
+                "MyWork": "Mijn werk",
+                "ShowDetails-btn": "Details weergeven",
+                "Description": "Beschrijving",
+                "DescriptionText2": `Zoals te zien is in de code, verspreidt dit script sleutels bij de start van het spel als de taak actief is.
+
+Dit gebeurt via een functie die een array met sleutels ontvangt.
+Deze functie zoekt vervolgens een willekeurige positie voor elke sleutel en stelt hun positie in op die willekeurige locatie.
+
+Willekeurige posities worden bepaald door lege objecten te volgen die rond de map zijn geplaatst en hun positie te gebruiken.
+Nadat een willekeurige positie is gebruikt, wordt die uit de array verwijderd en wordt de array verkleind, zodat er geen sleutels op dezelfde plek kunnen spawnen.`,
+                "AboutTheGame": "Over het spel",
+                "AboutTheGameText": `Een horror game in VR met een haptisch pak dat rillingen door je lichaam stuurt.
+Als je van spanning houdt, is deze game echt iets voor jou.
+Je bent een werknemer bij een contractbedrijf, en je weet alleen dat ze willen dat je snel werkt.
+Op de een of andere manier hebben ze een enorme timer op elke verdieping van het gebouw geplaatst zodat je het niet vergeet.
+Met de taak om klusjes te doen in dit vreemd creepy gebouw, begin je je steeds ongemakkelijker te voelen naarmate je hoger komt.
+Het lijkt normaal, maar er klopt iets niet. Hoe hoger je komt, hoe meer je begint te zien...`,
+                "Technique": "Techniek",
+                "TechniqueText": `Zoals eerder genoemd, wordt de game gespeeld in VR en in combinatie met een haptisch pak.
+We hebben ontwikkeld met de Tacsuit X16, maar gelukkig is de X40 ook compatibel.
+Uitbreiding met extra gear is ook mogelijk en vereist maar een paar aanpassingen in de bHaptics-software.
+Elke VR-headset die met een pc kan verbinden, is geschikt om mee te werken. Controleer alleen even of de kwaliteit goed blijft.
+We hebben er mooie art in verwerkt en ook wat post-processing toegevoegd.`,
+                "Gallery": "Gallerij",
+            }
+        };
+
+        function setLanguage(lang) {
+            const langData = translations[lang];
+            if (!langData) return;
+
+            // Translate unique IDs
+            for (const id in langData) {
+                const el = document.getElementById(id);
+                if (el) el.innerText = langData[id];
+            }
+
+            // Translate tags with classes and data-key
+            document.querySelectorAll(".translatable-text").forEach(el => {
+                const key = el.getAttribute("data-key");
+                if (langData[key]) {
+                    el.innerText = langData[key];
+                }
+            });
+
+            localStorage.setItem("language", lang);
+        }
+        // Auto-load the preferred language on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+            setLanguage(savedLanguage);
+        });
+
+        //Discord clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const notification = document.getElementById('copy-notification');
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000); // Hide after 2 seconds
+            });
+        }
+    </script>
+    <!-- Footer -->
+    <footer>
+        <a href="mailto:matthewklijnstra@gmail.com">
+            <img src="../imgs/Icons/Email.png" alt="Email" class="contact-icon">
+        </a>
+        <img src="../imgs/Icons/Discord.png" alt="Discord" class="contact-icon"
+            onclick="copyToClipboard('mattgames2667')">
+        <a href="https://www.linkedin.com/in/matthew-klijnstra-113734357/" target="_blank">
+            <img src="../imgs/Icons/LinkedIn.png" alt="LinkedIn" class="contact-icon">
+        </a>
+        <!-- copy for discord -->
+        <div id="copy-notification" class="copy-toast">Copied to clipboard!</div>
+    </footer>
+</body>
+
+</html>

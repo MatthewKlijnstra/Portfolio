@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@600&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <style>
+        /*
+        Colors to use
+
+        6DB1BF moonstone
+
+        8EB19D cambridge blue with a green tint
+        */
+
+        /* ============================= */
+        /*            Fonts              */
+        /* ============================= */
+
+        .AboutMe-Text {
+            font-family: 'UnifrakturCook', sans-serif;
+        }
+
+        .carved-text {
+            font-family: 'UnifrakturCook', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+
+            color: #ffffff10;
+            /* carved faint look */
+            text-shadow:
+                1px 1px 2px rgba(0, 0, 0, 0.8),
+                0px 0px 2px rgba(255, 255, 255, 0.116);
+
+            transition: text-shadow 1.5s ease-in, color 10s ease-out;
+        }
+
+        .carved-text:hover {
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.6),
+                0 0 15px rgba(255, 216, 100, 0.726);
+            color: #ffffff20;
+        }
+
+        /* ============================= */
+        /*             Main              */
+        /* ============================= */
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #233440, #1a1c29);
+            color: #919191;
+        }
+
+        .hero {
+            background: radial-gradient(circle, #0015ff39, #15647e43), url(imgs/Gifs/Ry6p.gif);
+            color: rgb(176, 176, 176);
+            padding: 100px 0;
+            text-align: center;
+            border-radius: 50px 50px 60px 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+        }
+
+        .ProjectsHeader {
+            margin-top: 1%;
+            color: #6DB1BF;
+            font-size: 2rem;
+            text-decoration: underline;
+        }
+
+        .portfolio img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0px 2px 10px rgb(30, 30, 30);
+        }
+
+        .portfolio .card {
+            border: none;
+            border-radius: 20px;
+            background: #363c4d;
+            /* box-shadow: 0 4px 10px rgb(80, 80, 80); */
+            transition: transform 0.3s, box-shadow 0.3s;
+            transition: opacity 0.3s ease, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio .Highlight {
+            border: none;
+            border-radius: 20px;
+            background: #363c4d;
+            box-shadow: 0px 2px 25px rgb(154, 154, 154);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(207, 207, 207, 0.59);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #bdc7c7;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 10px;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        /* ============================= */
+        /*           About Me            */
+        /* ============================= */
+        .About {
+            color: #f3f3f3c1;
+        }
+
+        .Aboutme-Container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 30px 10px 30px 10px;
+
+        }
+
+        .AboutMe-Image {
+            width: 20%;
+        }
+
+        .AboutMe-Text {
+            flex: 1;
+            min-width: 250px;
+            max-width: 700px;
+            text-align: left;
+            color: #919191d8;
+        }
+
+        .AboutMe-Titel {
+            color: rgb(235, 235, 235);
+        }
+
+        .about-img-wrapper {
+            flex-shrink: 0;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .about-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .hover-img {
+            opacity: 0;
+        }
+
+        .about-img-wrapper:hover .hover-img {
+            opacity: 1;
+        }
+
+        .about-img-wrapper:hover .normal-img {
+            opacity: 0;
+        }
+
+        .about-link {
+            display: inline-block;
+            border-radius: 50%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0px -2px 40px rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        /* background text */
+        /* sub about */
+        .about-img-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Carved text placement */
+        .carved-text {
+            position: absolute;
+            font-size: 2rem;
+        }
+
+        .top-left {
+            top: -30px;
+            left: -20px;
+            transform: rotate(-15deg);
+        }
+
+        .top-right {
+            top: -20px;
+            right: -22px;
+            transform: rotate(15deg);
+        }
+
+        .bottom-left {
+            bottom: -4px;
+            left: -16px;
+            transform: rotate(10deg);
+        }
+
+        .bottom-right {
+            bottom: -10px;
+            right: -30px;
+            transform: rotate(-10deg);
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tagTitle {
+            background-color: #ff0000;
+            color: rgb(255, 255, 255);
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.691);
+            max-height: 30px;
+        }
+
+        .tagTime {
+            background-color: #5ba29a;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngine {
+            background-color: #5FA8D3;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngineIMGUnity {
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .tagEngineIMGUnreal {
+            min-width: 45px;
+            max-width: 50px;
+        }
+
+
+        .tagPlatform {
+            background-color: #1c2424;
+            color: white;
+            padding: 0px 5px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagPlatformIMG {
+            min-width: 30px;
+            max-width: 40px;
+            max-height: 30px;
+            margin: 0px;
+        }
+
+        .tagPeople {
+            background-color: #344966;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tags img {
+            vertical-align: middle;
+        }
+
+        /* mosonry */
+        .masonry {
+            column-count: 3;
+            column-gap: 1.5rem;
+        }
+
+        .masonry .card {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            break-inside: avoid;
+        }
+
+        /* ============================= */
+        /*            Extra              */
+        /* ============================= */
+        /*  Language */
+        .flag-icon {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .WelcomeTextContainer {
+            padding: 0px 23% 0px 23%;
+        }
+
+        .WelcomText {
+            border-radius: 50px;
+            background-color: #1d1d1de1;
+        }
+
+        .WelcomeTextContainerExtra {
+            padding: 0px 40% 0px 40%;
+        }
+
+        .WelcomeTextExtra {
+            border-radius: 50px;
+            background-color: #1d1d1de1;
+        }
+
+        /* Contact */
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord copy */
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333333bd;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+
+        /* ============================= */
+        /*         Filter tags           */
+        /* ============================= */
+
+        .tag {
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border-radius: 6px;
+            padding: 3px 6px;
+            margin: 2px;
+            display: inline-block;
+            background-color: #555;
+            /* default */
+            color: #f3f3f3;
+            font-size: 0.8rem;
+        }
+
+        .tag.highlighted {
+            background-color: #c4b200;
+            color: black;
+            font-weight: bold;
+            box-shadow: 0 0 6px #e7d436;
+        }
+
+        /* Preloader background */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        /* Loader animation */
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #333;
+            border-top-color: #f5f5f5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* When loading is done */
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* welcome popup */
+        .welcome-popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .welcome-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            animation: popupIn 0.6s ease;
+        }
+
+        .popup-content h2 {
+            margin-bottom: 15px;
+        }
+
+        .popup-content button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .popup-content button:hover {
+            background: #ddd;
+        }
+
+        @keyframes popupIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<!-- preloader -->
+<div id="preloader">
+    <div class="loader"></div>
+</div>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="container">
+            <div class="container">
+                <div class="d-flex">
+                    <img src="imgs/Icons/English-flag.png" alt="English" onclick="setLanguage('en')"
+                        style="width: 40px; cursor: pointer;">
+                    <img src="imgs/Icons/Dutch-flag.png" alt="Dutch" onclick="setLanguage('nl')"
+                        style="width: 40px; cursor: pointer;">
+                </div>
+            </div>
+            <!-- <img src="imgs/Icons/English-flag.png" alt="English" class="flag-icon me-2"
+                        onclick="setLanguage('en')">
+                    <img src="imgs/Icons/Dutch-flag.png" alt="Dutch" class="flag-icon" onclick="setLanguage('nl')"> -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="MoreAboutMe.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="WelcomeTextContainer">
+                <h1 class="WelcomText translatable-text" data-key="Welcome">Welcome to Matthew's Portfolio</h1>
+            </div>
+            <div class="WelcomeTextContainerExtra">
+                <p class="WelcomeTextExtra translatable-text" data-key="Welcome-Extra">XR developer and code enthusiast
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio">
+        <div class="container">
+            <h2 class="text-center mb-4 ProjectsHeader">Projects</h2>
+            <div class="text-center mb-4">
+                <div class="btn-group filter-group" role="group" aria-label="Filter projects">
+                    <button type="button" class="btn btn-outline-light translatable-text active" data-key="All-Filter"
+                        data-tag="all" onclick="toggleFilter(this)">All</button>
+                    <button type="button" class="btn btn-outline-light" data-tag="Unity"
+                        onclick="toggleFilter(this)">Unity C#</button>
+                    <button type="button" class="btn btn-outline-light" data-tag="Unreal"
+                        onclick="toggleFilter(this)">Unreal</button>
+                    <button type="button" class="btn btn-outline-light" data-tag="VR"
+                        onclick="toggleFilter(this)">VR</button>
+                    <button type="button" class="btn btn-outline-light" data-tag="PC"
+                        onclick="toggleFilter(this)">PC</button>
+                    <button type="button" class="btn btn-outline-light" data-tag="Console"
+                        onclick="toggleFilter(this)">Console</button>
+                    <button type="button" class="btn btn-outline-light " data-tag="Recreation"
+                        onclick="toggleFilter(this)">Hobby Project</button>
+                </div>
+            </div>
+            <div class="masonry">
+                <a href="project/Floors.html" class="text-decoration-none">
+                    <div class="card" data-tags="Unity VR">
+                        <img src="imgs/Floors.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">Floors</h3>
+                            <div class="tags">
+                                <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                                <span><img src="imgs/Icons/Unity.png" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnity"></span>
+                                <span><img src="imgs/Icons/VR.png" alt="Platform Icon"
+                                        class="tagPlatform tagPlatformIMG"></span>
+                                <span class="tagPeople">4 Devs</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="project/VideoReality.html" class="text-decoration-none">
+                    <div class="card" data-tags=" Unity VR">
+                        <img src="imgs/VideoReality.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">VideoReality</h3>
+                            <div class="tags">
+                                <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                                <span><img src="imgs/Icons/Unity.png" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnity"></span>
+                                <span><img src="imgs/Icons/VR.png" alt="Platform Icon" class="tagPlatform"
+                                        class="tagPlatform"></span>
+                                <span class="tagPeople">2 Devs</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="project/Kuru-Kuru.html" class="text-decoration-none">
+                    <div class="card" data-tags="Unity PC Recreation">
+                        <img src="imgs/Kuru Kuru.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">Kuru Kuru</h3>
+                            <div class="tags">
+                                <span class="tagTime">Hobby Project</span>
+                                <span><img src="imgs/Icons/Unity.png" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnity"></span>
+                                <span><img src="imgs/Icons/PC.png" alt="Platform Icon" class="tagPlatform"
+                                        class="tagPlatform"></span>
+                                <span class="tagPeople">Solo</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="project/AltEgoProject.html" class="text-decoration-none">
+                    <div class="card" data-tags="Unreal VR">
+                        <img src="imgs/AltEgoMain.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">AltEgo</h3>
+                            <div class="tags">
+                                <span class="tagTime translatable-text" data-key="Time-Tag-8">8 weeks</span>
+                                <span><img src="imgs/Icons/Unreal.jpg" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnreal"></span></span>
+                                <span><img src="imgs/Icons/VR.png" class="tagPlatform tagPlatformIMG"></span>
+                                <span class="tagPeople">3 Devs</span>
+                            </div>
+                        </div>
+                    </div>
+                </a><a href="project/LittleJumper.html" class="text-decoration-none">
+                    <div class="card" data-tags="Unity PC Console">
+                        <img src="imgs/Platformer.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">LittleJumper</h3>
+                            <div class="tags">
+                                <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                                <span><img src="imgs/Icons/Unity.png" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnity"></span>
+                                <span><img src="imgs/Icons/PC.png" class="tagPlatform tagPlatformIMG"> <img
+                                        src="imgs/Icons/Console.png" class="tagPlatform tagPlatformIMG"></span>
+                                <span class="tagPeople">Solo</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="project/WhisSis.html" class="text-decoration-none">
+                    <div class="card" data-tags="Unity VR">
+                        <img src="imgs/game_poster_edit.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">WhisSis</h3>
+                            <div class="tags">
+                                <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                                <span><img src="imgs/Icons/Unity.png" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnity"></span>
+                                <span><img src="imgs/Icons/VR.png" class="tagPlatform tagPlatformIMG"></span>
+                                <span class="tagPeople">3 Devs</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="project/DungeonShooter.html" class="text-decoration-none">
+                    <div class="card" data-tags="Unity PC Console Recreation">
+                        <img src="imgs/DungeonShooter.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h3 class="project-title">DungeonShooter</h3>
+                            <div class="tags">
+                                <span class="tagTime">Hobby Project</span>
+                                <span><img src="imgs/Icons/Unity.png" alt="Engine Icon"
+                                        class="tagEngine tagEngineIMGUnity"></span>
+                                <span><img src="imgs/Icons/PC.png" class="tagPlatform tagPlatformIMG"> <img
+                                        src="imgs/Icons/Console.png" class="tagPlatform tagPlatformIMG"></span>
+                                <span class="tagPeople">Solo</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="About">
+        <div class="container text-center">
+            <h2 class="AboutMe-Titel translatable-text" data-key="AboutMe">About Me</h2>
+            <div class="Aboutme-Container">
+                <div class="AboutMe-Text translatable-text" data-key="AboutMeText"> </div>
+                <!-- Image Wrapper -->
+                <div class="about-img-container">
+                    <a href="MoreAboutMe.html" class="about-link">
+                        <div class="position-relative d-inline-block about-img-wrapper">
+                            <img src="imgs/AboutMe.JPG" class="img-fluid about-img normal-img">
+                            <img src="imgs/AboutMeHover.JPG" class="img-fluid about-img hover-img">
+                        </div>
+                    </a>
+
+                    <!-- Carved text around -->
+                    <span class="carved-text top-left translatable-text" data-key="More">MORE</span>
+                    <span class="carved-text top-right translatable-text" data-key="About">ABOUT</span>
+                    <span class="carved-text bottom-left translatable-text" data-key="Me">ME</span>
+                    <span class="carved-text bottom-right translatable-text" data-key="Here">HERE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- welcome popup -->
+    <div id="welcome-popup" class="welcome-popup">
+        <div class="popup-content">
+            <h2>Welcome!</h2>
+            <p>Thanks for looking! Find anything out of place or you have a question? My contacts are down below↓ Feel
+                free to contact me about the question/problem!</p>
+            <button onclick="closeWelcome()">Let's Go</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+            <a href="mailto:matthewklijnstra@gmail.com">
+                <img src="imgs/Icons/Email.png" alt="Email" class="contact-icon">
+            </a>
+            <img src="imgs/Icons/Discord.png" alt="Discord" class="contact-icon"
+                onclick="copyToClipboard('mattgames2667')">
+            <a href="https://www.linkedin.com/in/matthew-klijnstra-113734357/" target="_blank">
+                <img src="imgs/Icons/LinkedIn.png" alt="LinkedIn" class="contact-icon">
+            </a>
+            <!-- copy for discord -->
+            <div id="copy-notification" class="copy-toast">Copied to clipboard!</div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const translations = {
+            en: {
+                "Welcome": "Welcome to Matthew's Portfolio",
+                "Welcome-Extra": "XR developer and code enthusiast",
+                "Time-Tag-4": "4 weeks",
+                "Time-Tag-8": "8 weeks",
+                "All-Filter": "All",
+                "AboutMe": "About Me",
+                "AboutMeText": `Let me tell you something about me. I'm 17, always had a passion for games and the military has always had my interest, which is probably noticeable in the picture on the right. My hobby's exist of a martial arts sport, reading, gaming and most of all developing games. As a kid I always wondered how fun it would be to make games. There had been some doubts but eventually after I found the right study, I went on to become an XR developer.
+                 
+                Of course as an XR developer, Unity is well know engine to me. As is C#. I also work in C++ And learning to use it with Unreal. This portfolio is made with HTML, CSS and JavaScript so you can definitely say that I'm good at that. `,
+                "More": "MORE",
+                "About": "ABOUT",
+                "Me": "ME",
+                "Here": "HERE",
+
+                /* About me text EN
+                
+                Let me tell you something about
+                                    me. I'm 17, always had a passion for games
+                                    and the military has always had my interest, wich is probably noticable in the picture on the right.
+                                    My hobby's exist of a martial arts sport, reading, gaming and most of all developing games. As a kid
+                                    I always wonderd how fun it would be to make games. There had been some douts but eventualy after I
+                                    found the right study, I whent on to become an XR developer. Of course as an XR developer, Unity is 
+                                    well know engine to me. As is C#. I also work in C++ And learing to use it with Unreal. This portfolio 
+                                    is made with HTML, CSS and JavaScript so I gues you could say that I'm also good at that.
+                
+                */
+
+            },
+            nl: {
+                "Welcome": "Welkom op Matthew's Portfolio",
+                "Welcome-Extra": "XR-ontwikkelaar en codeliefhebber",
+                "Time-Tag-4": "4 weken",
+                "Time-Tag-8": "8 weken",
+                "All-Filter": "Allen",
+                "AboutMe": "Over Mij",
+                "AboutMeText": `Laat me iets over mezelf vertellen. Ik ben 17, heb altijd een passie gehad voor games
+en het leger heeft me ook altijd geïnteresseerd, wat waarschijnlijk te zien is op de foto rechts.
+Mijn hobby’s bestaan uit een vechtsport, lezen, gamen en vooral het ontwikkelen van games.
+Als kind vroeg ik me altijd af hoe leuk het zou zijn om zelf games te maken.
+Er waren wat twijfels, maar uiteindelijk, nadat ik de juiste studie had gevonden,
+ben ik verder gegaan om XR-ontwikkelaar te worden. 
+
+Natuurlijk is Unity als XR-ontwikkelaar een bekende engine voor mij. Net als C#.
+Ik werk ook met C++ en ben aan het leren om het te gebruiken met Unreal.
+Dit portfolio is gemaakt met HTML, CSS en JavaScript, dus je zou kunnen zeggen dat ik daar ook goed in ben.`,
+                "More": "MEER",
+                "About": "OVER",
+                "Me": "MIJ",
+                "Here": "HIER",
+            }
+        };
+
+        function setLanguage(lang) {
+            const langData = translations[lang];
+            if (!langData) return;
+
+            // Translate unique IDs
+            for (const id in langData) {
+                const el = document.getElementById(id);
+                if (el) el.innerText = langData[id];
+            }
+
+            // Translate tags with classes and data-key
+            document.querySelectorAll(".translatable-text").forEach(el => {
+                const key = el.getAttribute("data-key");
+                if (langData[key]) {
+                    el.innerText = langData[key];
+                }
+            });
+
+            localStorage.setItem("language", lang);
+        }
+        // Auto-load the preferred language on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+            setLanguage(savedLanguage);
+        });
+
+        //Discord clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const notification = document.getElementById('copy-notification');
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000); // Hide after 2 seconds
+            });
+        }
+
+        // Filter
+        // Keep track of active filters
+        const activeFilters = new Set();
+
+        function toggleFilter(button) {
+            const tag = button.getAttribute('data-tag');
+            const allButton = document.querySelector('[data-tag="all"]');
+
+            if (tag === 'all') {
+                // Reset all filters
+                activeFilters.clear();
+                document.querySelectorAll('.filter-group .btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            } else {
+                // Deselect "All" if any other filter clicked
+                allButton.classList.remove('active');
+
+                if (button.classList.contains('active')) {
+                    button.classList.remove('active');
+                    activeFilters.delete(tag);
+                } else {
+                    activeFilters.clear();
+                    document.querySelectorAll('.filter-group .btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    activeFilters.add(tag);
+                }
+
+                // If none filters selected, re-activate All
+                if (activeFilters.size === 0) {
+                    allButton.classList.add('active');
+                }
+            }
+
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const cards = document.querySelectorAll('.masonry .card');
+
+            const noActiveFilters = activeFilters.size === 0;
+
+            cards.forEach(card => {
+                const tags = (card.getAttribute('data-tags') || '').split(' ');
+                const matches = !noActiveFilters && [...activeFilters].every(tag => tags.includes(tag));
+
+                if (matches) {
+                    card.classList.add('Highlight');
+                    card.style.opacity = '1';
+                } else {
+                    card.classList.remove('Highlight');
+                    card.style.opacity = noActiveFilters ? '1' : '0.3';
+                }
+
+                // Highlight matching tag spans inside card
+                const tagSpans = card.querySelectorAll('[data-tag]');
+                tagSpans.forEach(tagEl => {
+                    const tagValue = tagEl.getAttribute('data-tag');
+                    if (activeFilters.has(tagValue)) {
+                        tagEl.classList.add('highlighted');
+                    } else {
+                        tagEl.classList.remove('highlighted');
+                    }
+                });
+            });
+        }
+
+        //preloader  
+        window.addEventListener("load", () => {
+            const preloader = document.getElementById("preloader");
+            preloader.classList.add("hidden");
+        });
+
+        //welcome popup
+        function closeWelcome() {
+            const popup = document.getElementById("welcome-popup");
+            popup.classList.remove("active");
+            localStorage.setItem("welcomeShown", "true"); // remember that it's been shown
+        }
+
+        window.addEventListener("load", () => {
+            const popup = document.getElementById("welcome-popup");
+            const preloader = document.getElementById("preloader");
+            const alreadyShown = localStorage.getItem("welcomeShown");
+
+            // hide preloader first
+            preloader.classList.add("hidden");
+
+            // show popup only if not shown before
+            if (!alreadyShown) {
+                setTimeout(() => {
+                    popup.classList.add("active");
+                }, 800); // short delay for smooth transition
+            }
+        });
+    </script>
+</body>
+
+</html>

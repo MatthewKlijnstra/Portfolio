@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ============================= */
+        /*             Base              */
+        /* ============================= */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #323232;
+            color: #c6c6c6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #007bff8a, #0057b3a8);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: #007bff74;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            margin-top: 50px;
+        }
+
+        .collapse {
+            margin-left: 100px;
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-item .project-info {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-item:hover .project-info {
+            transform: translateX(10px);
+        }
+
+        .dropdown-item:hover {
+            color: #959595;
+        }
+
+        .custom-color {
+            color: #008b09ba;
+        }
+
+        .custom-color:hover {
+            color: rgba(226, 2, 2, 0.451);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Horizontal Slider */
+        .image-slider {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .slider {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .slider-image {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slider-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================= */
+        /*           carousel            */
+        /* ============================= */
+        .image-slider-container {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 1%;
+            border-radius: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: rgba(0, 142, 57, 0.747);
+            box-shadow: 0px 2px 15px rgba(174, 174, 174, 0.571);
+            background-color: #2b2b2bd5;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            width: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .sliding-tags-container {
+            margin: auto;
+            width: 300px;
+        }
+
+        .sliding-container-bar {
+            width: auto;
+        }
+
+        .sliding-tags {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #6f4e17a9;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+
+        .tags-wrapper {
+            display: inline-block;
+            animation: slide 10s linear infinite;
+            /* Adjust the duration as needed */
+        }
+
+
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-50.4%);
+                /* Adjust based on content */
+            }
+        }
+
+        .sliding-tags:hover .tags-wrapper {
+            animation-play-state: paused;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tagTitle {
+            background-color: #007bff;
+            color: rgb(255, 255, 255);
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.691);
+        }
+
+        .tagTime {
+            background-color: #782000;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .tagEngine {
+            background-color: #008309;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .tagPlatform {
+            background-color: #1d1d1d;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .tagPeople {
+            background-color: #b98e00;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+        .Technique-Titel {
+            color: green;
+        }
+
+        .Technique-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .Technique-Text {
+            color: #dfdfdfd2;
+        }
+
+        .MyWork-Titel {
+            Color: rgb(192, 192, 192);
+        }
+
+        .MyWork-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .MyWork-Text {
+            color: #dfdfdfd2;
+        }
+
+        .AboutTheGame-Titel {
+            color: rgb(0, 214, 199);
+        }
+
+        .AboutTheGame-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .AboutTheGame-Text {
+            color: #dfdfdfd2;
+        }
+
+        /* ============================= */
+        /*         Show my work          */
+        /* ============================= */
+        .work-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #f8f9fa;
+            padding: 0 20px;
+            /* Start with minimal padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .details-section.open {
+            max-height: 1000px;
+            /* large enough for content */
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .code-example {
+            background: #1e1e1e;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 1.1rem;
+            max-height: 300px;
+            flex: 1;
+        }
+
+        .description {
+            flex: 1;
+            text-align: left;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .details-btn:hover {
+            background: #21b300;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav center">
+                <li class="nav-item">
+                </li>
+                <a href="../index.html" class="btn btn-primary">Back to Portfolio</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Other projects
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="Floors.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Floors.png">
+                                    <span>Floors</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="WhisSis.html">
+                                <div class="project-info">
+                                    <img src="../imgs/game_poster_edit.png">
+                                    <span>WhisSis</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="LittleJumper.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Platformer.png">
+                                    <span>LittleJumper</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="VideoReality.html">
+                                <div class="project-info">
+                                    <img src="../imgs/VideoReality.png">
+                                    <span>VideoReality</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="Kuru-Kuru.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Kuru Kuru.png">
+                                    <span>Kuru Kuru</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">
+                                <div class="project-info">
+                                    <img src="../imgs/UnrealC-feature.png">
+                                    <span class="custom-color">currently on</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="DungeonShooter.html">
+                                <div class="project-info">
+                                    <img src="../imgs/DungeonShooter.png">
+                                    <span>DungeonShooter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Examen</h1>
+            <p>Examen opdracht</p>
+        </div>
+    </section>
+
+    <!-- Tags-->
+    <div class="sliding-container-bar">
+        <div class="sliding-tags-container">
+            <div class="sliding-tags">
+                <div class="tags-wrapper">
+                    <span class="tagTitle">N/A</span>
+                    <span class="tagTime">N/A</span>
+                    <span class="tagEngine">N/A</span>
+                    <span class="tagPlatform">N/A</span>
+                    <span class="tagPeople">N/A</span>
+                    <!-- Duplicates-->
+                    <span class="tagTitle">N/A</span>
+                    <span class="tagTime">N/A</span>
+                    <span class="tagEngine">N/A</span>
+                    <span class="tagPlatform">N/A</span>
+                    <span class="tagPeople">N/A</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Section -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- My Work -->
+            <h2 class="MyWork-Titel translatable-text" data-key="MyWork">My Work</h2>
+            <div class="container">
+                <div class="work-section" id="work1">
+                    <div class="video-container" onclick="toggleDetails('details1')">
+                        <iframe width="100%" height="450" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details1')">Show Details</button>
+                    <div class="details-section" id="details1">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code>// Example code block
+             function example() {
+                 console.log("Hello, world!");
+             }
+                                     </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="translatable-text" data-key="Description">oops something whent wrong, reload
+                                    the page</h3>
+                                <p>This is a brief explanation of the work.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-section" id="work2">
+                    <div class="video-container" onclick="toggleDetails('details2')">
+                        <video src="example2.mp4" autoplay loop muted></video>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details2')">Show Details</button>
+                    <div class="details-section" id="details2">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code>// Another example code block
+             function exampleTwo() {
+                 console.log("Hello again!");
+             }
+                                     </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="translatable-text" data-key="Description">oops something whent wrong, reload
+                                    the page</h3>
+                                <p>This is a brief explanation of the work.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the game -->
+            <h2 class="AboutTheGame-Titel translatable-text" data-key="AboutTheGame">About the game</h2>
+            <div class="AboutTheGame-Text-Container">
+                <div calss="AboutTheGame-Text">Nunc mattis erat vel feugiat tincidunt. Donec ut erat egestas, eleifend
+                    tortor nec, semper ex. Mauris placerat lectus at risus viverra varius. Ut nisi ante, tempor eget sem
+                    eget, mattis dictum nisi. Curabitur non erat efficitur, consequat mauris finibus, vehicula lorem.
+                    Sed eu ante sed turpis congue consequat id eu magna. Nunc nec congue magna. Phasellus varius
+                    malesuada iaculis. Proin in tortor ut erat consequat condimentum sit amet a odio. Vivamus vitae
+                    sapien at erat semper tempor a quis enim.
+                </div>
+            </div>
+
+            <!-- Technique -->
+            <h2 class="Technique-Titel translatable-text" data-key="Technique">Technique</h2>
+            <div class="Technique-Text-Container">
+                <div class="Technique-Text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis feugiat magna. Praesent
+                    placerat, justo non commodo accumsan, erat mi eleifend ipsum, et tincidunt nisl lorem sit amet
+                    lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse dictum, ipsum et
+                    mollis placerat, purus turpis volutpat quam, non porttitor tortor tellus et diam. Maecenas euismod
+                    orci ex, vel tincidunt velit malesuada sit amet. Donec augue mauris, fringilla vel fermentum
+                    tincidunt, lobortis sit amet nibh. Maecenas vel ipsum bibendum, pellentesque purus at, tempus ex.
+                    Aliquam sodales scelerisque erat ac imperdiet. Aliquam viverra justo nec pharetra vulputate. Etiam
+                    vitae facilisis orci, lobortis imperdiet elit. Proin a iaculis nibh, sit amet consectetur lectus.
+                    Maecenas sodales dignissim rhoncus. Nullam tempus eu mauris commodo fermentum. Cras tincidunt mattis
+                    leo, sodales auctor est malesuada id.
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <h2 class="translatable-text" data-key="Gallery">oops something whent wrong, reload the page</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <img src="https://via.placeholder.com/350" alt="Screenshot 1" class="img-fluid rounded">
+                </div>
+                <div class="col-md-4">
+                    <img src="https://via.placeholder.com/350" alt="Screenshot 2" class="img-fluid rounded">
+                </div>
+                <div class="col-md-4">
+                    <img src="https://via.placeholder.com/350" alt="Screenshot 3" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+        <script>
+            function toggleDetails(id) {
+                const section = document.getElementById(id);
+                section.classList.toggle("open");
+            }
+
+            const translations = {
+                en: {
+                    "Project-Tag": "Strange hardware project",
+                    "Time-Tag-4": "4 weeks",
+                    "MyWork": "My work",
+                    "ShowDetails-btn": "Show Details",
+                    "Description": "Description",
+                    "AboutTheGame": "About the game",
+                    "Technique": "Technique",
+                    "Gallery": "Gallery",
+                },
+                nl: {
+                    "Project-Tag": "Vreemde hardware project",
+                    "Time-Tag-4": "4 weken",
+                    "MyWork": "Mijn werk",
+                    "ShowDetails-btn": "Details weergeven",
+                    "Description": "Beschrijving",
+                    "AboutTheGame": "Over het spel",
+                    "Technique": "Techniek",
+                    "Gallery": "gallerij",
+                }
+            };
+
+            function setLanguage(lang) {
+                const langData = translations[lang];
+                if (!langData) return;
+
+                // Translate unique IDs
+                for (const id in langData) {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = langData[id];
+                }
+
+                // Translate tags with classes and data-key
+                document.querySelectorAll(".translatable-text").forEach(el => {
+                    const key = el.getAttribute("data-key");
+                    if (langData[key]) {
+                        el.innerText = langData[key];
+                    }
+                });
+
+                localStorage.setItem("language", lang);
+            }
+            // Auto-load the preferred language on page load
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+                setLanguage(savedLanguage);
+            });
+        </script>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Email: matthewKlijnstra@gmail.com. Discord: mattgames2667. LinkedIn: ...</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuru Kuru</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark-reasonable.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        /* ============================= */
+        /*             Base              */
+        /* ============================= */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #323232;
+            color: #c6c6c6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #007bff8a, #0057b3a8);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: #007bff74;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            margin-top: 50px;
+        }
+
+        .collapse {
+            margin-left: 100px;
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-item .project-info {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-item:hover .project-info {
+            transform: translateX(10px);
+        }
+
+        .dropdown-item:hover {
+            color: #959595;
+        }
+
+        .custom-color {
+            color: #008b09ba;
+        }
+
+        .custom-color:hover {
+            color: rgba(226, 2, 2, 0.451);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Horizontal Slider */
+        .image-slider {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .slider {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .slider-image {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slider-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================= */
+        /*           carousel            */
+        /* ============================= */
+        .image-slider-container {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 1%;
+            border-radius: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #1f8bef;
+            box-shadow: 0px 2px 15px rgba(174, 174, 174, 0.571);
+            background-color: #2b2b2bd5;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            width: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .sliding-tags-container {
+            margin: auto;
+            width: 230px;
+        }
+
+        .sliding-container-bar {
+            width: auto;
+        }
+
+        .sliding-tags {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #6f4e17a9;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+
+        .tags-wrapper {
+            display: inline-block;
+            animation: slide 10s linear infinite;
+            /* Adjust the duration as needed */
+        }
+
+
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-50.4%);
+                /* Adjust based on content */
+            }
+        }
+
+        .sliding-tags:hover .tags-wrapper {
+            animation-play-state: paused;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tagTime {
+            background-color: #5ba29a;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngine {
+            background-color: #5FA8D3;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngineIMGUnity {
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .tagEngineIMGUnreal {
+            min-width: 45px;
+            max-width: 50px;
+        }
+
+
+        .tagPlatform {
+            background-color: #1c2424;
+            color: white;
+            padding: 0px 5px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagPlatformIMG {
+            min-width: 30px;
+            max-width: 40px;
+            max-height: 30px;
+            margin: 0px;
+        }
+
+        .tagPeople {
+            background-color: #344966;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tags img {
+            vertical-align: middle;
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+        .Technique-Titel {
+            color: #4EA5D9;
+        }
+
+        .Technique-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .Technique-Text {
+            color: #dfdfdfd2;
+        }
+
+        .MyWork-Titel {
+            Color: #66D7D1;
+        }
+
+        .MyWork-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .MyWork-Text {
+            color: #dfdfdfd2;
+        }
+
+        .AboutTheGame-Titel {
+            color: #6DB1BF;
+        }
+
+        .AboutTheGame-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .AboutTheGame-Text {
+            color: #dfdfdfd2;
+        }
+
+        .Gallery {
+            color: #2191FB;
+        }
+
+        /* ============================= */
+        /*         Show my work          */
+        /* ============================= */
+        .work-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #324354c2;
+            padding: 0 20px;
+            /* Start with minimal padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .details-section.open {
+            max-height: 1000px;
+            background-color: rgb(109, 109, 111);
+            /* large enough for content */
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 1.1rem;
+            max-height: 300px;
+            flex: 1;
+        }
+
+        .description {
+            flex: 1;
+            text-align: left;
+        }
+
+        .Description-Titel {
+            color: #6ac4d5;
+        }
+
+        .Description-Text {
+            color: #c8c8c8;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: #007bff;
+            color: rgb(212, 212, 212);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .details-btn.active {
+            background: #007bff;
+            /* brighter active color */
+            color: rgba(245, 227, 227, 0.483);
+            ;
+        }
+
+        .details-btn:hover {
+            background: #21b300;
+        }
+
+        /* Contact */
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord copy */
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333333bd;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav center">
+                <li class="nav-item">
+                </li>
+                <a href="../index.html" class="btn btn-primary">Back to Portfolio</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Other projects
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="Floors.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Floors.png">
+                                    <span>Floors</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="AltEgoProject.html">
+                                <div class="project-info">
+                                    <img src="../imgs/AltEgoMain.png">
+                                    <span>AltEgoProject</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="WhisSis.html">
+                                <div class="project-info">
+                                    <img src="../imgs/game_poster_edit.png">
+                                    <span>WhisSis</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="VideoReality.html">
+                                <div class="project-info">
+                                    <img src="../imgs/VideoReality.png">
+                                    <span>VideoReality</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="LittleJumper.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Platformer.png">
+                                    <span>LittleJumper</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">
+                                <div class="project-info">
+                                    <img src="../imgs/Kuru Kuru.png">
+                                    <span class="custom-color">currently on</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="DungeonShooter.html">
+                                <div class="project-info">
+                                    <img src="../imgs/DungeonShooter.png">
+                                    <span>DungeonShooter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Kuru Kuru</h1>
+            <p>First ever game</p>
+        </div>
+    </section>
+
+    <!-- Tags-->
+    <div class="sliding-container-bar">
+        <div class="sliding-tags-container">
+            <div class="sliding-tags">
+                <div class="tags-wrapper">
+                    <span class="tagTime translatable-text" data-key="Time-Tag-Own"></span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/PC.png" alt="Platform Icon" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">solo</span>
+                    <!-- Duplicates-->
+                    <span class="tagTime translatable-text" data-key="Time-Tag-Own"></span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/PC.png" alt="Platform Icon" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">solo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Section -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- My Work -->
+            <h2 class="MyWork-Titel translatable-text" data-key="MyWork">My Work</h2>
+            <div class="container">
+                <div class="work-section" id="work1">
+                    <div class="video-container" onclick="toggleDetails('details1')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/qlfo6UoAu78?si=0FaL0F4LnhRonhU_"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details1')">Show Details</button>
+                    <div class="details-section" id="details1">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code class="language-csharp">using UnityEngine;
+
+public class ObstaclePP : MonoBehaviour
+{
+    [SerializeField] private Rigidbody2D player;
+
+    [Header("Push")]
+
+    [SerializeField] private float pushForceL1;
+    [SerializeField] private float pushForceL2;
+    [SerializeField] private float pushForceL3;
+
+    [Header("Pull")]
+    [SerializeField] private float pullForceL1;
+    [SerializeField] private float pullForceL2;
+    [SerializeField] private float pullForceL3;
+
+    void Start()
+    {
+        if (player == null)
+            player = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("pushG"))
+        {
+            player.AddForce(other.transform.up * pushForceL1);
+        }
+        else if (other.gameObject.CompareTag("pushB"))
+        {
+            player.AddForce(other.transform.up * pushForceL2);
+        }
+        else if (other.gameObject.CompareTag("pushR"))
+        {
+            player.AddForce(other.transform.up * pushForceL3);
+        }
+        else if (other.gameObject.CompareTag("pullG"))
+        {
+            player.AddForce(-other.transform.up * pullForceL1);
+        }
+        else if (other.gameObject.CompareTag("pullB"))
+        {
+            player.AddForce(-other.transform.up * pullForceL2);
+        }
+        else if (other.gameObject.CompareTag("pullR"))
+        {
+            player.AddForce(-other.transform.up * pullForceL3);
+        }
+    }
+}
+                                    </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText1"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-section" id="work2">
+                    <div class="video-container" onclick="toggleDetails('details2')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/zLvHJy_KD80?si=nNcV6RvZV6MNnrEG"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details2')">Show Details</button>
+                    <div class="details-section" id="details2">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code class="language-csharp">private void OnTriggerEnter2D(Collider2D other)
+{
+
+ if (other.gameObject.CompareTag("switch"))
+  {
+    if (isGreen == false)
+    {
+        isGreen = true;
+    }
+    else if (isGreen == true)
+    {
+        isGreen = false;
+    }
+  }
+                                    
+ if (isGreen == false && other.gameObject.CompareTag("Gwall"))
+  {
+     if (spawnState == 6)
+     {
+         transform.position = new Vector2(36.74f, -43.5f);
+     }
+     if (spawnState == 7)
+     {
+         transform.position = new Vector2(65.13f, -95.92f);
+     }
+  }
+ if (isGreen == true && other.gameObject.CompareTag("Pwall"))
+  {
+     if (spawnState == 6)
+     {
+         transform.position = new Vector2(36.74f, -43.5f);
+     }
+     if (spawnState == 7)
+     {
+         transform.position = new Vector2(65.13f, -95.92f);
+     }
+  }
+}
+                                    </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText2"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the game -->
+            <h2 class="AboutTheGame-Titel translatable-text" data-key="AboutTheGame">About the game</h2>
+            <div class="AboutTheGame-Text-Container">
+                <div class="AboutTheGame-Text translatable-text" data-key="AboutTheGameText"> </div>
+            </div>
+
+            <!-- Technique -->
+            <h2 class="Technique-Titel translatable-text" data-key="Technique">Technique</h2>
+            <div class="Technique-Text-Container">
+                <div class="Technique-Text translatable-text" data-key="TechniqueText"> </div>
+            </div>
+
+            <!-- Gallery -->
+            <h2 class="Gallery translatable-text" data-key="Gallery">oops something whent wrong, reload the page</h2>
+            <!-- Horizontal Image Carousel -->
+            <div class="image-slider-container">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../imgs/KuruKuru1.png" class="d-block w-100" alt="Screenshot 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/KuruKuru2.png" class="d-block w-100" alt="Screenshot 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/KuruKuru3.png" class="d-block w-100" alt="Screenshot 3">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            function toggleDetails(id) {
+                const section = document.getElementById(id);
+                const button = section.previousElementSibling; // assumes button is right before details
+
+                const isOpen = section.classList.toggle("open");
+                button.classList.toggle("active", isOpen);
+
+                // Optional: change button text
+                if (isOpen) {
+                    button.textContent = "Hide Details";
+                } else {
+                    button.textContent = "Show Details";
+                }
+            }
+
+            const translations = {
+                en: {
+                    "Project-Tag": "Strange hardware project",
+                    "Time-Tag-Own": "Own project",
+                    "MyWork": "My work",
+                    "ShowDetails-btn": "Show Details",
+                    "Description": "Description",
+                    "DescriptionText1": `The push and Pull objects. Pretty simple to explain, green arrows pull red arrows push. Green cone hase the lowest force, red the highest and blue is in the middel. `,
+                    "DescriptionText2": `For the coloured walls these few if statements where engough to get them working. If you are green(isGreen = true) you can go trough green walls but not purple. It's the other way around if you are purple(isGreen = false). That simple and offers a great addition to the game.`,
+                    "AboutTheGame": "About the game",
+                    "AboutTheGameText": `My first ever game!🎉 So the code would be considered as not one of the best. But I am reworking most of it now, because it was pretty succesfull. It's was supposed to be an imatation of the old retro game called Kuru Kuru Kururin. I had a great idea for a wist in this game to make it diffrent from the other ones. I didn't make it rough on the corners and slow to move, no I made the players body have almost no drag and a way more difficult style of map. I also added some obstacle's like coloured walls where you have to switch your colour to pass trough either one of them. Pushers and pullers where also a new addition and a lot of people like those.`,
+                    "Technique": "Technique",
+                    "TechniqueText": `The technique has not much to it. It's unity 2D and the input is hardcoded. This was part of the game development test week, before we got to chose our branch of the course. So no hardware for this project. Although it might be fun to try implement the new inputsytem to add controllers to the mix. `,
+                    "Gallery": "Gallery",
+                },
+                nl: {
+                    "Project-Tag": "Vreemde hardware project",
+                    "Time-Tag-Own": "Eigen project",
+                    "MyWork": "Mijn werk",
+                    "ShowDetails-btn": "Details weergeven",
+                    "Description": "Beschrijving",
+                    "DescriptionText1": `De Push- en Pull-objects. Best simpel uit te leggen: groene pijlen trekken, rode pijlen duwen.
+De groene cone heeft de minste kracht, de rode de meeste en blauw zit in het midden.`,
+                    "DescriptionText2": `Voor de gekleurde muren waren deze paar if-statements genoeg om ze werkend te krijgen.
+Als je groen bent (isGreen = true) kun je door groene muren heen maar niet door paarse.
+Andersom, als je paars bent (isGreen = false).
+
+Zo simpel is het en het geeft toch een toffe extra toevoeging aan de game. `,
+                    "AboutTheGame": "Over het spel",
+                    "AboutTheGameText": `Mijn allereerste game! 🎉 Dus de code zou je niet echt als de beste kunnen beschouwen.
+Maar ik ben nu bezig met een rework van het grootste deel, omdat het best succesvol was.
+
+Het was bedoeld als een imitatie van de oude retro-game Kuru Kuru Kururin.
+Ik had alleen een tof idee voor een twist om het anders te maken dan de rest.
+Ik maakte de hoeken niet stroef en de beweging niet traag, nee ik gaf het spelerslichaam bijna geen weerstand en een veel moeilijkere stijl van map.
+
+Ik voegde ook obstakels toe zoals gekleurde muren waar je van kleur moet wisselen om erdoorheen te komen.
+Pushers en pullers waren ook een nieuwe toevoeging, en veel mensen vonden die erg leuk. `,
+                    "Technique": "Techniek",
+                    "TechniqueText": `De techniek stelt niet zo veel voor. Het is Unity 2D en de input is hardcoded.
+Dit was onderdeel van de game development testweek, voordat we onze richting binnen de opleiding mochten kiezen.
+Dus geen hardware voor dit project.
+
+Hoewel het misschien wel leuk zou zijn om het nieuwe input system te implementeren en controllers toe te voegen.`,
+                    "Gallery": "Gallerij",
+                }
+            };
+
+            function setLanguage(lang) {
+                const langData = translations[lang];
+                if (!langData) return;
+
+                // Translate unique IDs
+                for (const id in langData) {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = langData[id];
+                }
+
+                // Translate tags with classes and data-key
+                document.querySelectorAll(".translatable-text").forEach(el => {
+                    const key = el.getAttribute("data-key");
+                    if (langData[key]) {
+                        el.innerText = langData[key];
+                    }
+                });
+
+                localStorage.setItem("language", lang);
+            }
+            // Auto-load the preferred language on page load
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+                setLanguage(savedLanguage);
+            });
+
+            //Discord clipboard
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const notification = document.getElementById('copy-notification');
+                    notification.classList.add('show');
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 2000); // Hide after 2 seconds
+                });
+            }
+        </script>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <a href="mailto:matthewklijnstra@gmail.com">
+            <img src="../imgs/Icons/Email.png" alt="Email" class="contact-icon">
+        </a>
+        <img src="../imgs/Icons/Discord.png" alt="Discord" class="contact-icon"
+            onclick="copyToClipboard('mattgames2667')">
+        <a href="https://www.linkedin.com/in/matthew-klijnstra-113734357/" target="_blank">
+            <img src="../imgs/Icons/LinkedIn.png" alt="LinkedIn" class="contact-icon">
+        </a>
+        <!-- copy for discord -->
+        <div id="copy-notification" class="copy-toast">Copied to clipboard!</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Shooter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark-reasonable.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        /* ============================= */
+        /*             Base              */
+        /* ============================= */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #323232;
+            color: #c6c6c6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #007bff8a, #0057b3a8);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: #007bff74;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            margin-top: 50px;
+        }
+
+        .collapse {
+            margin-left: 100px;
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-item .project-info {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-item:hover .project-info {
+            transform: translateX(10px);
+        }
+
+        .dropdown-item:hover {
+            color: #959595;
+        }
+
+        .custom-color {
+            color: #008b09ba;
+        }
+
+        .custom-color:hover {
+            color: rgba(226, 2, 2, 0.451);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Horizontal Slider */
+        .image-slider {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .slider {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .slider-image {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slider-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================= */
+        /*           carousel            */
+        /* ============================= */
+        .image-slider-container {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 1%;
+            border-radius: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #1f8bef;
+            box-shadow: 0px 2px 15px rgba(174, 174, 174, 0.571);
+            background-color: #2b2b2bd5;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            width: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .sliding-tags-container {
+            margin: auto;
+            width: 230px;
+        }
+
+        .sliding-container-bar {
+            width: auto;
+        }
+
+        .sliding-tags {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #6f4e17a9;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+
+        .tags-wrapper {
+            display: inline-block;
+            animation: slide 10s linear infinite;
+            /* Adjust the duration as needed */
+        }
+
+
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-50.4%);
+                /* Adjust based on content */
+            }
+        }
+
+        .sliding-tags:hover .tags-wrapper {
+            animation-play-state: paused;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tagTime {
+            background-color: #5ba29a;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngine {
+            background-color: #5FA8D3;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngineIMGUnity {
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .tagEngineIMGUnreal {
+            min-width: 45px;
+            max-width: 50px;
+        }
+
+
+        .tagPlatform {
+            background-color: #1c2424;
+            color: white;
+            padding: 0px 5px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagPlatformIMG {
+            min-width: 30px;
+            max-width: 40px;
+            max-height: 30px;
+            margin: 0px;
+        }
+
+        .tagPeople {
+            background-color: #344966;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tags img {
+            vertical-align: middle;
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+        .Technique-Titel {
+            color: #4EA5D9;
+            ;
+        }
+
+        .Technique-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .Technique-Text {
+            color: #dfdfdfd2;
+        }
+
+        .MyWork-Titel {
+            Color: #66D7D1;
+        }
+
+        .MyWork-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .MyWork-Text {
+            color: #dfdfdfd2;
+        }
+
+        .AboutTheGame-Titel {
+            color: #6DB1BF;
+        }
+
+        .AboutTheGame-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .AboutTheGame-Text {
+            color: #dfdfdfd2;
+        }
+
+        .Gallery {
+            color: #2191FB
+        }
+
+        /* ============================= */
+        /*         Show my work          */
+        /* ============================= */
+        .work-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #324354c2;
+            padding: 0 20px;
+            /* Start with minimal padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .details-section.open {
+            max-height: 1000px;
+            background-color: rgb(109, 109, 111);
+            /* large enough for content */
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 1.1rem;
+            max-height: 300px;
+            flex: 1;
+        }
+
+        .description {
+            flex: 1;
+            text-align: left;
+        }
+
+        .Description-Titel {
+            color: #6ac4d5;
+        }
+
+        .Description-Text {
+            color: #c8c8c8;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: #007bff;
+            color: rgb(212, 212, 212);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .details-btn.active {
+            background: #007bff;
+            /* brighter active color */
+            color: rgba(245, 227, 227, 0.483);
+            ;
+        }
+
+        .details-btn:hover {
+            background: #21b300;
+        }
+
+        /* Contact */
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord copy */
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333333bd;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav center">
+                <li class="nav-item">
+                </li>
+                <a href="../index.html" class="btn btn-primary">Back to Portfolio</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Other projects
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="Floors.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Floors.png">
+                                    <span>Floors</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="AltEgoProject.html">
+                                <div class="project-info">
+                                    <img src="../imgs/AltEgoMain.png">
+                                    <span>AltEgoProject</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="WhisSis.html">
+                                <div class="project-info">
+                                    <img src="../imgs/game_poster_edit.png">
+                                    <span>WhisSis</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="VideoReality.html">
+                                <div class="project-info">
+                                    <img src="../imgs/VideoReality.png">
+                                    <span>VideoReality</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="LittleJumper.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Platformer.png">
+                                    <span>LittleJumper</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="Kuru-Kuru.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Kuru Kuru.png">
+                                    <span>Kuru Kuru</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">
+                                <div class="project-info">
+                                    <img src="../imgs/DungeonShooter.png">
+                                    <span class="custom-color">Currently on</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>DungeonShooter</h1>
+            <p>Work in progress</p>
+        </div>
+    </section>
+
+    <!-- Tags-->
+    <div class="sliding-container-bar">
+        <div class="sliding-tags-container">
+            <div class="sliding-tags">
+                <div class="tags-wrapper">
+                    <span class="tagTime translatable-text" data-key="Time-Tag-Own"></span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/PC.png" alt="Platform Icon" class="tagPlatform tagPlatformIMG">
+                        <img src="../imgs/Icons/Console.png" alt="Platform Icon"
+                            class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">Solo</span>
+                    <!-- Duplicates-->
+                    <span class="tagTime translatable-text" data-key="Time-Tag-Own"></span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/PC.png" alt="Platform Icon" class="tagPlatform tagPlatformIMG">
+                        <img src="../imgs/Icons/Console.png" alt="Platform Icon"
+                            class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">Solo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Section -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- My Work -->
+            <h2 class="MyWork-Titel translatable-text" data-key="MyWork">My Work</h2>
+            <div class="container">
+                <div class="work-section" id="work1">
+                    <div class="video-container" onclick="toggleDetails('details1')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/LFabuGHZwuw?si=-Ztj43AqF1ZIQt7z"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details1')">Show Details</button>
+                    <div class="details-section" id="details1">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code class="language-csharp"> protected override void Shoot(InputAction.CallbackContext context)
+ {
+     if (CheckAmmo() && this.isReloading == false)
+     {
+         bulletSpawner.Shoot(name);
+         this.currentAmmo--;
+         if (soundController != null)
+             soundController.ShotSound();
+     }
+     else
+     {
+         if (soundController != null)
+             soundController.EmptyShotSound();
+     }
+ }
+
+ private void ReloadCall(InputAction.CallbackContext context)
+ {
+     if (!this.isReloading)
+     {
+         StartCoroutine(Reload());
+         StartCoroutine(soundController.ReloadSound(reloadSpeed));
+     }
+ }
+
+ protected override IEnumerator Reload()
+ {
+     this.isReloading = true;
+     yield return new WaitForSeconds(reloadSpeed);
+     this.currentAmmo = ammo;
+     this.isReloading = false;
+     Debug.Log("Reloaded");
+ }
+
+
+ protected override bool CheckAmmo()
+ {
+     if (this.currentAmmo > 0)
+         return true;
+     else return false;
+ }
+                                     </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText1"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the game -->
+            <h2 class="AboutTheGame-Titel translatable-text" data-key="AboutTheGame">About the game</h2>
+            <div class="AboutTheGame-Text-Container">
+                <div class="AboutTheGame-Text translatable-text" data-key="AboutTheGameText"> </div>
+            </div>
+
+            <!-- Technique -->
+            <h2 class="Technique-Titel translatable-text" data-key="Technique">Technique</h2>
+            <div class="Technique-Text-Container">
+                <div class="Technique-Text translatable-text" data-key="TecniqueText"> </div>
+            </div>
+
+            <!-- Gallery -->
+            <h2 class="Gallery translatable-text" data-key="Gallery">oops something whent wrong, reload the page
+            </h2>
+            <!-- Horizontal Image Carousel -->
+            <div class="image-slider-container">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../imgs/DungeonShooter1.png" class="d-block w-100" alt="Screenshot 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/DungeonShooter2.png" class="d-block w-100" alt="Screenshot 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/DungeonShooter3.png" class="d-block w-100" alt="Screenshot 3">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                function toggleDetails(id) {
+                    const section = document.getElementById(id);
+                    const button = section.previousElementSibling; // assumes button is right before details
+
+                    const isOpen = section.classList.toggle("open");
+                    button.classList.toggle("active", isOpen);
+
+                    // Optional: change button text
+                    if (isOpen) {
+                        button.textContent = "Hide Details";
+                    } else {
+                        button.textContent = "Show Details";
+                    }
+                }
+
+                const translations = {
+                    en: {
+                        "Project-Tag": "Strange hardware project",
+                        "Time-Tag-Own": "Own project",
+                        "MyWork": "My work",
+                        "ShowDetails-btn": "Show Details",
+                        "Description": "Description",
+                        "DescriptionText1": `The weapon logic would be a good code example to show. But there is more that can be show and so much more to be made. To keep it simple for now, the code to the left shows the weapon it self with the shooting logic and a bit more. The weapons themselves also have elements that can adjust the damage. Outside the weapons is an overall elemental manager that controlls what elements exist trough inheritance. There is much more but that's  all for later or down below in the about. `,
+                        "AboutTheGame": "About the game",
+                        "AboutTheGameText": `As a developer I don't have a lot of experience with making art. So I try to keep it simple here. All of it is 2D and to stil give you that feel of a good zombie shooter, there is a detailed UI about what you are holding(weapon), carying(loot) and much more. I also want to add a fully fletched anouncer pack I found to comment on the rounds and add some extra's in there for secrets. The round starts off with an erie sound and I'dd like to add such audio designs to the zombies to. This is still all in development so some things are not showable yet. But I'll work on it some more when I have time, hopefully it's publisehd in about 2 years or so. `,
+                        "Technique": "Technique",
+                        "TecniqueText": `To make it easier I made this in 2D unity. With the new input system from unity, I made it compatible for keyboard and mouse and controller. `,
+                        "Gallery": "Gallery",
+                    },
+                    nl: {
+                        "Project-Tag": "Vreemde hardware project",
+                        "Time-Tag-Own": "Eigen project",
+                        "MyWork": "Mijn werk",
+                        "ShowDetails-btn": "Details weergeven",
+                        "Description": "Beschrijving",
+                        "DescriptionText1": `De weapon logic zou een goed codevoorbeeld zijn om te laten zien.
+Maar er is meer dat getoond kan worden en nog zoveel meer dat gemaakt kan worden.
+
+Om het nu simpel te houden: de code links laat het wapen zelf zien met de shooting logic en nog wat extra.
+De wapens hebben zelf ook elementen die de damage kunnen aanpassen.
+
+Buiten de wapens is er een algemene elemental manager die bepaalt welke elementen bestaan via inheritance.
+Er is nog veel meer, maar dat is voor later of hieronder bij de About. `,
+                        "AboutTheGame": "Over het spel",
+                        "AboutTheGameText": `Als developer heb ik niet veel ervaring met het maken van art.
+Dus ik probeer het hier simpel te houden. Alles is 2D, en om je toch dat gevoel van een goede zombie shooter te geven, is er een gedetailleerde UI over wat je vasthoudt (weapon), wat je draagt (loot) en nog veel meer.
+
+Ik wil ook een volledig announcer pack toevoegen dat ik gevonden heb, om de rondes van commentaar te voorzien en er extra secrets in te stoppen.
+De ronde begint met een eerie sound, en ik wil zulke audio designs ook aan de zombies toevoegen.
+
+Dit is allemaal nog in development, dus sommige dingen zijn nog niet toonbaar.
+Maar ik werk er verder aan zodra ik tijd heb, hopelijk wordt het over een jaar of twee gepubliceerd.`,
+                        "Technique": "Techniek",
+                        "TecniqueText": `Om het makkelijker te maken heb ik dit in Unity 2D gebouwd.
+Met het nieuwe input system van Unity heb ik het compatible gemaakt voor keyboard en muis én controller.`,
+                        "Gallery": "Gallerij",
+                    }
+                };
+
+                function setLanguage(lang) {
+                    const langData = translations[lang];
+                    if (!langData) return;
+
+                    // Translate unique IDs
+                    for (const id in langData) {
+                        const el = document.getElementById(id);
+                        if (el) el.innerText = langData[id];
+                    }
+
+                    // Translate tags with classes and data-key
+                    document.querySelectorAll(".translatable-text").forEach(el => {
+                        const key = el.getAttribute("data-key");
+                        if (langData[key]) {
+                            el.innerText = langData[key];
+                        }
+                    });
+
+                    localStorage.setItem("language", lang);
+                }
+                // Auto-load the preferred language on page load
+                document.addEventListener("DOMContentLoaded", () => {
+                    const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+                    setLanguage(savedLanguage);
+                });
+
+                //Discord clipboard
+                function copyToClipboard(text) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const notification = document.getElementById('copy-notification');
+                        notification.classList.add('show');
+                        setTimeout(() => {
+                            notification.classList.remove('show');
+                        }, 2000); // Hide after 2 seconds
+                    });
+                }
+            </script>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <a href="mailto:matthewklijnstra@gmail.com">
+            <img src="../imgs/Icons/Email.png" alt="Email" class="contact-icon">
+        </a>
+        <img src="../imgs/Icons/Discord.png" alt="Discord" class="contact-icon"
+            onclick="copyToClipboard('mattgames2667')">
+        <a href="https://www.linkedin.com/in/matthew-klijnstra-113734357/" target="_blank">
+            <img src="../imgs/Icons/LinkedIn.png" alt="LinkedIn" class="contact-icon">
+        </a>
+        <!-- copy for discord -->
+        <div id="copy-notification" class="copy-toast">Copied to clipboard!</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

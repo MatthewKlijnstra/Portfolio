@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Matthew</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@600&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: large;
+            background: linear-gradient(135deg, #233440, #1a1c29);
+            color: #919191;
+            padding: 40px;
+        }
+
+        .navbar{
+            margin-bottom: 20px;
+            margin-top: 0px;
+        }
+
+        /*  About Me Sections   */
+        .about-me {
+            display: flex;
+            min-height: 100vh;
+            /* at least full screen, but can grow */
+            height: auto;
+            /* allow expansion with content */
+            overflow: visible;
+            /* so details aren’t clipped */
+            border-radius: 20px;
+        }
+
+
+        .about-panel {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2e3445;
+            color: #fff;
+            transition: flex 0.8s ease, opacity 0.8s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: auto;
+            /* instead of hidden, lets content scroll if needed */
+        }
+
+        /* Round corners only on the outside edges */
+        .about-panel.left {
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            background: linear-gradient(270deg, #2e3445, #545f82)
+        }
+
+        .about-panel.right {
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            background: linear-gradient(90deg, #2e3445, #1f2a4c)
+        }
+
+        .about-panel.inactive {
+            opacity: 0.4;
+        }
+
+        .about-panel.active {
+            flex: 4;
+            /* expands to 80% */
+        }
+
+        .about-panel:not(.active) {
+            flex: 1;
+            /* shrinks to 20% */
+        }
+
+        .panel-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .details {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .about-panel.active .details {
+            display: block;
+        }
+
+        /* Media handling */
+        .about-panel video,
+        .about-panel img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+
+
+
+        /*  Inactive details    */
+        .about-panel.inactive {
+            opacity: 0.4;
+            position: relative;
+        }
+
+        .about-panel.inactive::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            /* soft dark overlay */
+            pointer-events: none;
+            /* don’t block clicks */
+            border-radius: inherit;
+            /* keep rounded corners */
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            /* inner shadow */
+        }
+
+        /*  About content   */
+        /* ============================= */
+        /*           Hobbies             */
+        /* ============================= */
+        .about-content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .media-block {
+            flex: 1 1 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .media-block img,
+        .media-block video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Borders by type */
+        /* Blue */
+        .image-type {
+            border: 4px solid #007bff;
+        }
+
+        /* Green */
+        .video-type {
+            border: 4px solid #21b300;
+        }
+
+        /* Orange */
+        .gallery-type {
+            border: 4px solid #ff9800;
+        }
+
+
+        /* Scrolling gallery */
+        /* grid layout */
+        .photo-grid {
+            position: relative;
+            display: grid;
+            gap: 12px;
+        }
+
+        .grid1 {
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        }
+
+        .grid2 {
+            grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+        }
+
+        .grid3 {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        /*more*/
+
+        .media-block1 {
+            width: 80%;
+            Height: 450px;
+        }
+
+        .media-block2 {
+            width: 70%;
+            Height: 490px;
+        }
+
+        .media-block3 {
+            width: 90%;
+            Height: 470px;
+        }
+
+        /*more*/
+
+        .photo-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: zoom-in;
+            transition: transform 400ms cubic-bezier(.2, .9, .2, 1), box-shadow 300ms;
+            will-change: transform;
+            z-index: 1;
+            position: relative;
+            /* keep it in flow; transforms don't affect layout */
+        }
+
+        .photo-grid img.zoomed {
+            cursor: zoom-out;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            /* transform set inline by JS */
+        }
+
+        /* optional soft overlay when zoomed */
+        .photo-grid.zoom-active::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            pointer-events: none;
+            z-index: 50;
+            border-radius: inherit;
+        }
+
+        /*  Content */
+        .content-section {
+            padding: 40px;
+        }
+
+        .content-block {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Media + Text sizing */
+        .media-container {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .media-container img,
+        .media-container video {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .text-container {
+            flex: 2;
+            color: #ededed;
+            background-color: #1a1c2990;
+            border-radius: 15px 15px 15px 15px;
+            line-height: 1.6;
+            width: 30%;
+        }
+
+        /* Flip layout (media right / text left) */
+        .content-block.right-media {
+            flex-direction: row-reverse;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .content-block {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .content-block.right-media {
+                flex-direction: column;
+            }
+        }
+
+        /* ============================= */
+        /*           Skills              */
+        /* ============================= */
+
+        .skill-card {
+            background: #2e3445;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            max-width: 320px;
+            margin: 15px;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.45);
+        }
+
+        .skill-image img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 3px solid #1a1c29;
+        }
+
+        .skill-content {
+            padding: 20px;
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .skill-tags {
+            flex-wrap: wrap;
+            gap: 8px;
+
+        }
+
+        .skill-tag {
+            background: #46506a;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: background 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: #007bff;
+        }
+
+        .skill-card-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* allows wrapping onto next row */
+            gap: 20px;
+            /* spacing between cards */
+            justify-content: center;
+            /* center them nicely */
+        }
+
+
+
+        /* ============================= */
+        /*        Hidden overlay         */
+        /* ============================= */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* Cover panel */
+        .overlay-content {
+            background: #363b4e;
+            color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 70%;
+            max-width: 75%px;
+            min-height: 300px;
+            max-height: 80vh;
+            /* take up to 80% of viewport height */
+            overflow-y: auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+            position: relative;
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Custom Scrollbar for Overlay */
+        .overlay-content::-webkit-scrollbar {
+            width: 10px;
+            /* scrollbar width */
+        }
+
+        .overlay-content::-webkit-scrollbar-track {
+            background: #2e3445;
+            /* track color */
+            border-radius: 10px;
+        }
+
+        .overlay-content::-webkit-scrollbar-thumb {
+            background: #555d72;
+            /* thumb color */
+            border-radius: 10px;
+            border: 2px solid #2e3445;
+            /* padding effect */
+        }
+
+        .overlay-content::-webkit-scrollbar-thumb:hover {
+            background: #007bff;
+            /* glow on hover */
+        }
+
+        /* Firefox support */
+        .overlay-content {
+            scrollbar-width: 5%;
+            /* slim scrollbar */
+            scrollbar-color: #354877 #2e3445;
+            /* thumb | track */
+        }
+
+        /*background images */
+        .engine-bg {
+            background: url("imgs/AboutMe/Skills/EnginesBG.jpg") center/cover no-repeat;
+        }
+
+        .language-bg {
+            background: url("imgs/AboutMe/Skills/LanguagesBG.png") center/cover no-repeat;
+
+        }
+
+        .softskills-bg {
+            background: url("imgs/AboutMe/Skills/SoftBG.jpg") center/cover no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill shadow">
+        <div class="container">
+            <div class="container">
+                <div class="d-flex">
+                    <img src="imgs/Icons/English-flag.png" alt="English" onclick="setLanguage('en')"
+                        style="width: 40px; cursor: pointer;">
+                    <img src="imgs/Icons/Dutch-flag.png" alt="Dutch" onclick="setLanguage('nl')"
+                        style="width: 40px; cursor: pointer;">
+                </div>
+            </div>
+            <!-- <img src="imgs/Icons/English-flag.png" alt="English" class="flag-icon me-2"
+                        onclick="setLanguage('en')">
+                    <img src="imgs/Icons/Dutch-flag.png" alt="Dutch" class="flag-icon" onclick="setLanguage('nl')"> -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Back</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- room for titel -->
+
+    <div class="about-me">
+        <!-- Left: Hobbies -->
+        <div class="about-panel left" onclick="expandPanel('left')">
+            <div class="panel-content">
+                <h1>Hobbies</h1>
+                <p class="intro">Click to learn more about my hobbies</p>
+                <div class="details">
+
+                    <!-- Content Section -->
+                    <section class="content-section">
+                        <div class="content-block right-media">
+                            <!-- Media -->
+                            <div class="media-container">
+                                <div class="media-block media-block1 gallery-type">
+                                    <div class="photo-grid grid1" id="photoGrid">
+                                        <img src="imgs/AboutMe/Kenpo/img1.jpg" alt="Image 1" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Kenpo/img4.jpg" alt="Image 3" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Kenpo/img3.jpg" alt="Image 3" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Kenpo/img2.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="text-container">
+                                <h2 class="translatable-text" data-key="Martial-Arts-Titel">Martial Arts</h2>
+                                <p class="translatable-text" data-key="Martial-Arts-Text-1">
+                                    I personaly think it's good for everyone to have something they absolutly are fond
+                                    about.
+                                    For me it's my martial arts sport called: "American Kenpo Karate".
+                                </p>
+                                <p class="translatable-text" data-key="Martial-Arts-Text-2">
+                                    I train 3 times a week 4 hours in total. One of those day's I also teach the lower
+                                    belts, wich in turn also gives me a new insight on how certain techiques are done.
+                                    This help a lot with my development and gets me to keep up with all the material.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="content-block left-media">
+                            <!-- Media -->
+                            <div class="media-container">
+                                <div class="media-block media-block2 gallery-type">
+                                    <div class="photo-grid grid2" id="photoGrid">
+                                        <img src="imgs/AboutMe/Stars/img1.jpg" alt="Image 1" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Stars/img2.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Stars/img3.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Stars/img4.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="text-container">
+                                <h2 class="translatable-text" data-key="Stars-Titel">Stars</h2>
+                                <p class="translatable-text" data-key="Stars-Text-1">
+                                    As one of the things we don't look up to engough the stars always get a big look
+                                    from
+                                    me. With just a beginners telescope and my phone, the photo's to the left are all
+                                    made with just those two.
+                                </p>
+                                <p class="translatable-text" data-key="Stars-Text-2">
+                                    Something we know so littel about can always get my attention. Why do the stars
+                                    exist? How do they exist? When did they apear? These question are just a few that
+                                    roam my mind and that's why I admire it. You can't reach it, but you can see it.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="content-block right-media">
+                            <!-- Media -->
+                            <div class="media-container">
+                                <div class="media-block media-block3 gallery-type">
+                                    <div class="photo-grid grid3" id="photoGrid">
+                                        <img src="imgs/AboutMe/Range/img1.jpg" alt="Image 1" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Range/img2.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Range/img5.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Range/img6.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Range/img7.jpg" alt="Image 2" onclick="toggleZoom(this)">
+                                        <img src="imgs/AboutMe/Range/img10.png" alt="Image 2"
+                                            onclick="toggleZoom(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="text-container">
+                                <h2 class="translatable-text" data-key="Range-Titel">Range/Militairy</h2>
+                                <p class="translatable-text" data-key="Range-Text-1">
+                                    The passion for the militairy does show here. From when I was young I was always
+                                    playing with nerfguns. I understand that not everyone is very fond of weapons, but
+                                    it is my interest. Safety first though, that's what my dad was already teaching me
+                                    from a young age.
+                                </p>
+                                <p class="translatable-text" data-key="Range-Text-2">
+                                    That is also needed at the range. If you don't follow rules it's as easy as getting
+                                    kicked out. You shoot safe or you don't shoot. One of the reasons I started at this
+                                    specific range.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Skills -->
+        <div class="about-panel right" onclick="expandPanel('right')">
+            <div class="panel-content">
+                <h2>Skills</h2>
+                <p class="intro">Click to explore my skills</p>
+                <div class="details">
+
+                    <div class="skill-card-container">
+                        <!-- Skill Card 1 -->
+                        <div class="skill-card"
+                            onclick="document.getElementById('overlay-Skill-1').style.display='flex'">
+                            <div class="skill-image">
+                                <img src="imgs/AboutMe/Skills/ProgrammingLanguageIcon.jpg" alt="Programming">
+                            </div>
+                            <div class="skill-content">
+                                <h3 class="skill-title translatable-text" data-key="Skill-Language-Titel">Languages</h3>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">C#</span>
+                                    <span class="skill-tag">C++</span>
+                                    <span class="skill-tag">HTML</span>
+                                    <span class="skill-tag">CSS</span>
+                                    <span class="skill-tag">JS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overlay: Skill 1 -->
+                        <div id="overlay-Skill-1" class="overlay" onclick="closeOverlay(event)">
+                            <div class="overlay-content language-bg" onclick="event.stopPropagation()">
+                                <button class="close-btn" onclick="closeOverlay()">✕</button>
+                                <div class="skill-tags">
+                                    <h2 class="translatable-text" data-key="Skill-Language-Titel">Languages</h2>
+                                    <span class="skill-tag">C#</span>
+                                    <span class="skill-tag">C++</span>
+                                    <span class="skill-tag">HTML</span>
+                                    <span class="skill-tag">CSS</span>
+                                    <span class="skill-tag">JS</span>
+                                </div>
+                                <section class="content-section">
+                                    <!-- content block -->
+                                    <div class="content-block left-media">
+                                        <!-- Media -->
+
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>C#</h2>
+                                            <p class="translatable-text" data-key="Skill-C#-Text">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- content block -->
+                                    <div class="content-block right-media">
+                                        <!-- Media -->
+
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>C++</h2>
+                                            <p class="translatable-text" data-key="Skill-C++-Text">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- content block -->
+                                    <div class="content-block left-media">
+                                        <!-- Media -->
+
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>WEB</h2>
+                                            <p class="translatable-text" data-key="Skill-WEB-Text">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+
+                        <!-- Skill Card 2 -->
+                        <div class="skill-card"
+                            onclick="document.getElementById('overlay-Skill-2').style.display='flex'">
+                            <div class="skill-image">
+                                <img src="imgs/AboutMe/Skills/GameEngineIcon2.png" alt="Game Engines">
+                            </div>
+                            <div class="skill-content">
+                                <h3 class="skill-title">Game Engines</h3>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">Unreal Engine</span>
+                                    <span class="skill-tag">Unity</span>
+                                    <span class="skill-tag">RayLib</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overlay: Skill 2 -->
+                        <div id="overlay-Skill-2" class="overlay" onclick="closeOverlay(event)">
+                            <div class="overlay-content" onclick="event.stopPropagation()">
+                                <button class="close-btn" onclick="closeOverlay()">✕</button>
+                                <h2>Game Engine Skills</h2>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">Unreal Engine</span>
+                                    <span class="skill-tag">Unity</span>
+                                    <span class="skill-tag">RayLib</span>
+                                </div>
+                                <section class="content-section">
+                                    <div class="content-block right-media">
+                                        <!-- Media -->
+                                        <div class="media-container">
+
+                                        </div>
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>Unity</h2>
+                                            <p class="translatable-text" data-key="Skill-Unity-Text-1">
+                                            </p>
+                                            <p class="translatable-text" data-key="Skill-Unity-Text-2">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="content-block left-media">
+                                        <!-- Media -->
+                                        <div class="media-container">
+
+                                        </div>
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>Unreal</h2>
+                                            <p class="translatable-text" data-key="Skill-Unreal-Text-1">
+                                            </p>
+                                            <p class="translatable-text" data-key="Skill-Unreal-Text-2">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="content-block right-media">
+                                        <!-- Media -->
+                                        <div class="media-container">
+
+                                        </div>
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>RayLib</h2>
+                                            <p class="translatable-text" data-key="Skill-Raylib-Text-1">
+                                            </p>
+                                            <p class="translatable-text" data-key="Skill-Raylib-Text-2">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+
+                        <!-- Skill Card 3 -->
+                        <div class="skill-card"
+                            onclick="document.getElementById('overlay-Skill-3').style.display='flex'">
+                            <div class="skill-image">
+                                <img src="imgs/AboutMe/Skills/SoftSkillsIcon.png" alt="Soft Skills">
+                            </div>
+                            <div class="skill-content">
+                                <h3 class="skill-title">Soft Skills</h3>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">Teamwork</span>
+                                    <span class="skill-tag">Teaching</span>
+                                    <span class="skill-tag">Scrum</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overlay: Skill 3 -->
+                        <div id="overlay-Skill-3" class="overlay" onclick="closeOverlay(event)">
+                            <div class="overlay-content" onclick="event.stopPropagation()">
+                                <button class="close-btn" onclick="closeOverlay()">✕</button>
+                                <h2>Soft Skills</h2>
+                                <div class="skill-tags">
+                                    <span class="skill-tag translatable-text"
+                                        data-key="Skill-Teamwork-Titel">Teamwork</span>
+                                    <span class="skill-tag translatable-text"
+                                        data-key="Skill-Teaching-Titel">Teaching</span>
+                                    <span class="skill-tag">Scrum</span>
+                                </div>
+                                <section class="content-section">
+                                    <div class="content-block left-media">
+                                        <!-- Media -->
+                                        <div class="media-container">
+
+                                        </div>
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2 class="translatable-text" data-key="Skill-Teamwork-Titel">Teamwork</h2>
+                                            <p class="translatable-text" data-key="Skill-Teamwork-Text-1">
+                                            </p>
+                                            <p class="translatable-text" data-key="Skill-Teamwork-Text-2">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="content-block right-media">
+                                        <!-- Media -->
+                                        <div class="media-container">
+
+                                        </div>
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2 class="translatable-text" data-key="Skill-Teaching-Titel">Teaching</h2>
+                                            <p class="translatable-text" data-key="Skill-Teaching-Text-1">
+                                            </p>
+                                            <p class="translatable-text" data-key="Skill-Teaching-Text-2">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="content-block left-media">
+                                        <!-- Media -->
+                                        <div class="media-container">
+
+                                        </div>
+
+                                        <!-- Text -->
+                                        <div class="text-container">
+                                            <h2>Scrum</h2>
+                                            <p class="translatable-text" data-key="Skill-Scrum-Text-1">
+                                            </p>
+                                            <p class="translatable-text" data-key="Skill-Scrum-Text-2">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <a href="index.html" class="btn btn-outline-light mt-4">⬅ Back to Home</a>
+
+</body>
+
+<script>
+    // Translation
+    const translations = {
+        en: {
+            // Hobies            
+            "Martial-Arts-Titel": "Martial Arts",
+            "Martial-Arts-Text-1": "I personally think it's good for everyone to have something they absolutely are fond about. For me it's my martial arts sport called: 'American Kenpo Karate'.",
+            "Martial-Arts-Text-2": "I train 3 times a week 4 hours in total. One of those day's I also teach the lower belts, which in turn also gives me a new insight on how certain techniques are done. This help a lot with my development and gets me to keep up with all the material.",
+            "Stars-Titel": "Stars",
+            "Stars-Text-1": "As one of the things we don't look up to enough the stars always get a big look from me. With just a beginners telescope and my phone, the photo's to the left are all made with just those two.",
+            "Stars-Text-2": "Something we know so little about can always get my attention. Why do the stars exist? How do they exist? When did they appear? These question are just a few that roam my mind and that's why I admire it. You can't reach it, but you can see it.",
+            "Range-Titel": "Range/Militairy",
+            "Range-Text-1": "The passion for the military does show here. From when I was young I was always playing with nerf guns. I understand that not everyone is very fond of weapons, but it is my interest. Safety first though, that's what my dad was already teaching me from a young age.",
+            "Range-Text-2": "That is also needed at the range. If you don't follow rules it's as easy as getting kicked out. You shoot safe or you don't shoot. One of the reasons I started at this specific range.",
+
+            // Skills
+            // Language Skills
+            "Skill-Language-Titel": "Programming Languages",
+            "Skill-C#-Text": "Obviously tied to the fact that I work a lot with Unity. I Learned the most with it and do the most with it.",
+            "Skill-C++-Text": "A bit less know but a familiar programming language for me. Used in a special project with RayLib, it's not quite the same as C#.",
+            "Skill-WEB-Text": "If you are reading this, then you'd know that I made this website. It started with the help of AI but that's rarely needed anymore. All three Languages used in this website are well known to me. That being HTML, CSS and JS Mostly due to the fact that I made this portfolio. I did however start programming in P5JS, in which case helped me learn JS faster.",
+
+            //Engine Skills
+            "Skill-Unity-Text-1": "Of course Unity is a bit of a well know program for developers. My study course at GLU always uses this as the standard so I will say that my experience in Unity is quit big. Considering I've already worked with it for almost more than 2 years.",
+            "Skill-Unity-Text-2": "Much of my off time programming is in Unity. It's easy to start up so I don't have to worry about all the shenanigans. It's also a fan of VR and that's a plus point of course. The XR-integration toolkit is always on hand when talking about a VR game in Unity.",
+            "Skill-Unreal-Text-1": "The program more know for it's power. It's less familiar to me then unity, but I do find my way around blueprints very much. Learning C++ is going to be my main goal moving forward when developing with Unreal.",
+            "Skill-Unreal-Text-2": "Of course The project I used Unreal for was in VR, but it wasn't the only gimmick. It was a special project where we had to work together with students from an film school. These students had the task to implement motion animation made with a motion capture suit. It gave us a real challenge to put a VR game together with those animations but it did work pretty good.",
+            "Skill-Raylib-Text-1": "RayLib is actually a framework, specifically a framework for C++. It was a real challenge to go this one working to. The startup process was quit annoying. It wasn't even my first chose for the project. That was SFML, but with too much trouble starting a basic project I turned to a different framework.",
+            "Skill-Raylib-Text-2": "In the end it was a pretty good chose. Project was well made and I learned good bit of the basics for C++.",
+
+            // Soft Skills
+            "Skill-Teamwork-Titel": "Teamwork",
+            "Skill-Teamwork-Text-1": "You could say teamwork is part of the job. And I would be glad, because if not then it would be boring to work on a project. A solo project Obviously doesn’t need team work, But I much rather have a team project then a solo project.",
+            "Skill-Teamwork-Text-2": "We learned at school how to work together in a project. Talking about code documentations, task management and roles in the team. This we did with websites. My personal favourite was Codecks, but I'm quit adaptable. So any new ones I'm eager to learn.",
+            "Skill-Teaching-Titel": "Teaching",
+            "Skill-Teaching-Text-1": "When I was younger I've always liked helping people learn new things. whether it was English, Math or something about a game I liked very much.",
+            "Skill-Teaching-Text-2": "I've helped a lot of student and classmates at school. Sometimes the teacher was busy so he send student with questions to me. I'm also not afraid to say that I don't know what the answer is if I get a question. I'm more interested then to go through the steps with said person to find out a solution together.",
+            "Skill-Scrum-Text-1": "School sort of threw a scrum method at us for a project. This project was our first real team project with artist. So it was kind of swimming in unknow hot waters. We didn't really know what to do, so we just started with step 1 for the scrum method.",
+            "Skill-Scrum-Text-2": "We kept up with the stand ups every day. Kept good communication and got a great project out of it. I do love a bit of structure in team projects. It gives an idea on what to do when you're stuck on something. And if you set it up right, you can easily ask anyone on your team for help.",
+        },
+        nl: {
+            // Hobies
+            "Martial-Arts-Titel": "Vechtkunsten",
+            "Martial-Arts-Text-1": "Ik persoonlijk denk dat het goed is voor iedereen om iets te hebben waar ze absoluut dol op zijn. Voor mij is het mijn vechtsport genaamd: American Kenpo Karate.",
+            "Martial-Arts-Text-2": "Ik train 3 keer per week in totaal 4 uur. Op een van die dagen geef ik ook les aan de lagere banden, wat mij op zijn beurt ook een nieuw inzicht geeft in hoe bepaalde technieken worden gedaan. Dit helpt veel bij mijn ontwikkeling en zorgt ervoor dat ik op de hoogte blijf van al het materiaal.",
+            "Stars-Titel": "Sterren",
+            "Stars-Text-1": "Als een van de dingen waar we niet genoeg naar opkijken, krijgen de sterren altijd een grote blik van mij. Met alleen een beginnelingstelescoop en mijn telefoon, zijn de foto's links allemaal gemaakt met alleen die twee.",
+            "Stars-Text-2": "Iets waar we zo weinig van weten, kan altijd mijn aandacht trekken. Waarom bestaan de sterren? Hoe bestaan ze? Wanneer verschenen ze? Deze vragen zijn slechts een paar die door mijn hoofd spoken en daarom bewonder ik het. Je kunt het niet bereiken, maar je kunt het wel zien.",
+            "Range-Titel": "Schietbaan/Militair",
+            "Range-Text-1": "De passie voor het leger komt hier naar voren. Vanaf dat ik jong was speelde ik altijd met nerfgeweren. Ik begrijp dat niet iedereen erg dol is op wapens, maar het is mijn interesse. Veiligheid eerst, dat is wat mijn vader me al van jongs af aan leerde.",
+            "Range-Text-2": "Dat is ook nodig op de schietbaan. Als je de regels niet volgt, is het net zo makkelijk om eruit te worden gezet. Je schiet veilig of je schiet niet. Een van de redenen waarom ik bij deze specifieke schietbaan ben begonnen.",
+
+            // Skills
+            // Language Skills
+            "Skill-Language-Titel": "Programmeertalen",
+            "Skill-C#-Text": "Natuurlijk gekoppeld aan het feit dat ik veel met Unity werk. Ik heb er het meest mee geleerd en doe er het meest mee.",
+            "Skill-C++-Text": "Een beetje minder bekend, maar een vertrouwde programmeertaal voor mij. Gebruikt in een speciaal project met RayLib, het is niet helemaal hetzelfde als C#.",
+            "Skill-WEB-Text": "Als je dit leest, dan weet je dat ik deze website heb gemaakt. Het begon met de hulp van AI, maar dat is tegenwoordig zelden meer nodig. Alle drie de talen die in deze website worden gebruikt, zijn mij goed bekend. Dat zijn HTML, CSS en JS, vooral vanwege het feit dat ik dit portfolio heb gemaakt. Ik ben echter begonnen met programmeren in P5JS, wat me heeft geholpen om JS sneller te leren.",
+
+            //Engine Skills
+            "Skill-Unity-Text-1": "Natuurlijk is Unity een beetje een bekend programma voor ontwikkelaars. Mijn studie aan de GLU gebruikt dit altijd als de standaard, dus ik zal zeggen dat mijn ervaring met Unity behoorlijk groot is. Gezien het feit dat ik er al bijna meer dan 2 jaar mee werk.",
+            "Skill-Unity-Text-2": "Veel van mijn vrije tijd programmeren is in Unity. Het is gemakkelijk op te starten, dus ik hoef me geen zorgen te maken over alle fratsen. Het is ook een fan van VR en dat is natuurlijk een pluspunt. De XR-integratietoolkit is altijd bij de hand als het gaat om een VR-game in Unity.",
+            "Skill-Unreal-Text-1": "Het programma dat meer bekend staat om zijn kracht. Het is minder vertrouwd voor mij dan Unity, maar ik vind mijn weg heel goed rond blueprints. Het leren van C++ wordt mijn hoofddoel bij het ontwikkelen met Unreal.",
+            "Skill-Unreal-Text-2": "Natuurlijk was het project waarvoor ik Unreal gebruikte in VR, maar het was niet de enige gimmick. Het was een speciaal project waarbij we moesten samenwerken met studenten van een filmschool. Deze studenten hadden de taak om motion-capture animaties te implementeren die met een motion-capture pak waren gemaakt. Het gaf ons een echte uitdaging om een VR-game samen te stellen met die animaties, maar het werkte best goed.",
+            "Skill-Raylib-Text-1": "RayLib is eigenlijk een framework, specifiek een framework voor C++. Het was een echte uitdaging om deze aan het werk te krijgen. Het opstartproces was behoorlijk vervelend. Het was niet eens mijn eerste keuze voor het project. Dat was SFML, maar met te veel problemen bij het starten van een basisproject ben ik overgestapt op een ander framework.",
+            "Skill-Raylib-Text-2": "Uiteindelijk was het een vrij goede keuze. Het project was goed gemaakt en ik heb een goed deel van de basis van C++ geleerd.",
+
+            // Soft Skills
+            "Skill-Teamwork-Titel": "Teamwerk",
+            "Skill-Teamwork-Text-1": "Je zou kunnen zeggen dat teamwerk deel uitmaakt van het werk. En ik zou blij zijn, want als dat niet zo was, zou het saai zijn om aan een project te werken. Een solo project heeft natuurlijk geen teamwerk nodig. Maar ik heb veel liever een teamproject dan een solo project.",
+            "Skill-Teamwork-Text-2": "We hebben op school geleerd hoe we samen in een project moeten werken. We spraken over code documentatie, taakbeheer en rollen in het team. Dit deden we met websites. Mijn persoonlijke favoriet was Codecks, maar ik ben behoorlijk aanpasbaar. Dus voor nieuwe dingen ben ik graag bereid om te leren.",
+            "Skill-Teaching-Titel": "Lesgeven",
+            "Skill-Teaching-Text-1": "Toen ik jonger was, hielp ik mensen graag nieuwe dingen te leren, of het nu Engels, wiskunde of iets over een spel was waar ik erg van hield.",
+            "Skill-Teaching-Text-2": "Ik heb veel studenten en klasgenoten op school geholpen. Soms was de leraar druk, dus stuurde hij studenten met vragen naar mij. Ik ben ook niet bang om te zeggen dat ik het antwoord niet weet als ik een vraag krijg. Ik ben meer geïnteresseerd om samen met die persoon de stappen door te nemen om een oplossing te vinden.",
+            "Skill-Scrum-Text-1": "Op school gooiden ze ons een scrum-methode toe voor een project. Dit project was ons eerste echte teamproject met artiesten. Dus het was een beetje zwemmen in onbekende hete wateren. We wisten niet echt wat we moesten doen, dus we begonnen gewoon met stap 1 van de scrum-methode.",
+            "Skill-Scrum-Text-2": "We hielden elke dag stand-ups bij. We hielden goede communicatie en haalden er een geweldig project uit. Ik hou echt van een beetje structuur in teamprojecten. Het geeft een idee van wat te doen als je ergens vastloopt. En als je het goed opzet, kun je gemakkelijk iedereen in je team om hulp vragen.",
+        }
+    }
+
+    function setLanguage(lang) {
+        const langData = translations[lang];
+        if (!langData) return;
+
+        // Translate unique IDs
+        for (const id in langData) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = langData[id];
+        }
+
+        // Translate tags with classes and data-key
+        document.querySelectorAll(".translatable-text").forEach(el => {
+            const key = el.getAttribute("data-key");
+            if (langData[key]) {
+                el.innerText = langData[key];
+            }
+        });
+
+        localStorage.setItem("language", lang);
+    }
+    // Auto-load the preferred language on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+        setLanguage(savedLanguage);
+    });
+
+    // Section devider
+    function expandPanel(side) {
+        const left = document.querySelector('.about-panel.left');
+        const right = document.querySelector('.about-panel.right');
+
+        if (side === 'left') {
+            left.classList.add('active');
+            left.classList.remove('inactive');
+            right.classList.add('inactive');
+            right.classList.remove('active');
+            pauseMedia(right);
+            playMedia(left);
+        } else {
+            right.classList.add('active');
+            right.classList.remove('inactive');
+            left.classList.add('inactive');
+            left.classList.remove('active');
+            pauseMedia(left);
+            playMedia(right);
+        }
+    }
+
+    function playMedia(panel) {
+        panel.querySelectorAll('video').forEach(v => v.play());
+    }
+
+    function pauseMedia(panel) {
+        panel.querySelectorAll('video').forEach(v => v.pause());
+    }
+
+    // gallery
+    (function () {
+        let zoomedImg = null;
+        const GRID_PADDING = 0.90; // how much of grid the image can span while zoomed (0..1)
+
+        function toggleZoom(img) {
+            if (zoomedImg && zoomedImg === img) {
+                unzoom();
+            } else {
+                zoom(img);
+            }
+        }
+
+        function zoom(img) {
+            const grid = img.closest('.photo-grid') || document.getElementById('photoGrid');
+            if (!grid) return;
+
+            // set state
+            if (zoomedImg) unzoom(); // close previous if any
+            zoomedImg = img;
+            grid.classList.add('zoom-active');
+
+            // compute geometry
+            const imgRect = img.getBoundingClientRect();
+            const gridRect = grid.getBoundingClientRect();
+
+            const imgCenterX = imgRect.left + imgRect.width / 2;
+            const imgCenterY = imgRect.top + imgRect.height / 2;
+            const gridCenterX = gridRect.left + gridRect.width / 2;
+            const gridCenterY = gridRect.top + gridRect.height / 2;
+
+            const deltaX = gridCenterX - imgCenterX;
+            const deltaY = gridCenterY - imgCenterY;
+
+            // compute scale to fit into grid with padding
+            const maxWidth = gridRect.width * GRID_PADDING;
+            const maxHeight = gridRect.height * GRID_PADDING;
+            const scaleX = maxWidth / imgRect.width;
+            const scaleY = maxHeight / imgRect.height;
+            const scale = Math.max(1, Math.min(scaleX, scaleY));
+
+            // apply transform (translate then scale). use px values for translate
+            // Keep transform origin center so translate is correct.
+            img.style.transformOrigin = 'center center';
+            // use requestAnimationFrame so transition animates
+            requestAnimationFrame(() => {
+                img.classList.add('zoomed');
+                img.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+            });
+
+            // attach handlers to close by clicking outside or pressing Esc
+            setTimeout(() => {
+                document.addEventListener('click', outsideClickHandler);
+                document.addEventListener('keydown', escHandler);
+                window.addEventListener('resize', resizeHandler);
+            }, 0);
+        }
+
+        function unzoom() {
+            if (!zoomedImg) return;
+            const img = zoomedImg;
+            const grid = img.closest('.photo-grid') || document.getElementById('photoGrid');
+
+            img.classList.remove('zoomed');
+            img.style.transform = '';
+            img.style.transformOrigin = '';
+            zoomedImg = null;
+            if (grid) grid.classList.remove('zoom-active');
+
+            document.removeEventListener('click', outsideClickHandler);
+            document.removeEventListener('keydown', escHandler);
+            window.removeEventListener('resize', resizeHandler);
+        }
+
+        // if user clicks anywhere that's not the zoomed image, close
+        function outsideClickHandler(e) {
+            if (!zoomedImg) return;
+            if (e.target === zoomedImg) return; // click on the image itself will toggle via onclick
+            if (e.target.closest && e.target.closest('.photo-grid') === zoomedImg.closest('.photo-grid')) {
+                // If clicked inside the same grid but not on image -> close
+                unzoom();
+                return;
+            }
+            // clicked outside grid
+            unzoom();
+        }
+
+        function escHandler(e) {
+            if (e.key === 'Escape') unzoom();
+        }
+
+        function resizeHandler() {
+            // recompute transform so the zoomed image stays centered on resize
+            if (!zoomedImg) return;
+            // re-apply zoom with current image
+            const img = zoomedImg;
+            // small timeout so layout settles
+            setTimeout(() => {
+                // call zoom with same image will recalc and apply new transform
+                zoom(img);
+            }, 50);
+        }
+
+        // expose toggle to global (so inline onclick works)
+        window.toggleZoom = toggleZoom;
+        window.unzoomPhoto = unzoom;
+
+    })();
+
+
+    //Cover Overlay
+    function closeOverlay(event) {
+        if (event) {
+            // Close only if clicked background or close button
+            if (event.target.classList.contains('overlay') || event.target.classList.contains('close-btn')) {
+                event.target.closest('.overlay').style.display = "none";
+            }
+        } else {
+            // fallback: close all
+            document.querySelectorAll('.overlay').forEach(o => o.style.display = "none");
+        }
+    }
+
+
+
+</script>
+
+</html>
+
+
+<!-- Prefabs
+ 
+   /// Single Image
+
+    <div class="media-block image-type">
+        <img src="imgs/example.jpg" alt="Example Image">
+    </div>
+    
+   /// Video
+
+    <div class="media-block video-type">
+        <video autoplay loop muted playsinline>
+            <source src="videos/example.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+   /// Scrolling Gallery
+
+    <div class="media-block gallery-type">
+        <div class="scroll-gallery" id="scrollGallery1">
+            <div class="scroll-track">
+                <img src="imgs/DungeonShooter.png" alt="Image 1">
+                <img src="imgs/DungeonShooter1.png" alt="Image 2">
+                <img src="imgs/DungeonShooter2.png" alt="Image 3">
+            </div>
+        </div>
+    </div>
+
+    -->

@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhisSis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark-reasonable.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        /* ============================= */
+        /*             Base              */
+        /* ============================= */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #323232;
+            color: #c6c6c6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #007bff8a, #0057b3a8);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: #007bff74;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            margin-top: 50px;
+        }
+
+        /* ============================= */
+        /*       Background Video        */
+        /* ============================= */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding-top: 20vh;
+        }
+
+        .background-video::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        /* ============================= */
+        /*             Info              */
+        /* ============================= */
+        .collapse {
+            margin-left: 100px;
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-item .project-info {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-item:hover .project-info {
+            transform: translateX(10px);
+        }
+
+        .dropdown-item:hover {
+            color: #959595;
+        }
+
+        .custom-color {
+            color: #008b09ba;
+        }
+
+        .custom-color:hover {
+            color: rgba(226, 2, 2, 0.451);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Horizontal Slider */
+        .image-slider {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .slider {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .slider-image {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slider-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================= */
+        /*           carousel            */
+        /* ============================= */
+        .image-slider-container {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 1%;
+            border-radius: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #1f8bef;
+            box-shadow: 0px 2px 15px rgba(174, 174, 174, 0.571);
+            background-color: #2b2b2bd5;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            width: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .sliding-tags-container {
+            margin: auto;
+            width: 230px;
+        }
+
+        .sliding-container-bar {
+            width: auto;
+        }
+
+        .sliding-tags {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #6f4e17a9;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+
+        .tags-wrapper {
+            display: inline-block;
+            animation: slide 10s linear infinite;
+            /* Adjust the duration as needed */
+        }
+
+
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-50.4%);
+                /* Adjust based on content */
+            }
+        }
+
+        .sliding-tags:hover .tags-wrapper {
+            animation-play-state: paused;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tagTime {
+            background-color: #5ba29a;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngine {
+            background-color: #5FA8D3;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngineIMGUnity {
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .tagEngineIMGUnreal {
+            min-width: 45px;
+            max-width: 50px;
+        }
+
+
+        .tagPlatform {
+            background-color: #1c2424;
+            color: white;
+            padding: 0px 5px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagPlatformIMG {
+            min-width: 30px;
+            max-width: 40px;
+            max-height: 30px;
+            margin: 0px;
+        }
+
+        .tagPeople {
+            background-color: #344966;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tags img {
+            vertical-align: middle;
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+        .Technique-Titel {
+            color: #4EA5D9;
+        }
+
+        .Technique-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+
+        }
+
+        .Technique-Text {
+            color: #dfdfdfd2;
+        }
+
+        .MyWork-Titel {
+            Color: #66D7D1;
+        }
+
+        .MyWork-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+
+        }
+
+        .MyWork-Text {
+            color: #dfdfdfd2;
+        }
+
+        .AboutTheGame-Titel {
+            color: #6DB1BF;
+        }
+
+        .AboutTheGame-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+
+        }
+
+        .AboutTheGame-Text {
+            color: #dfdfdfd2;
+        }
+
+        .Gallery {
+            color: #2191FB;
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+
+        .work-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #324354c2;
+            padding: 0 20px;
+            /* Start with minimal padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .details-section.open {
+            max-height: 1000px;
+            background-color: rgb(109, 109, 111);
+            /* large enough for content */
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 1.1rem;
+            max-height: 300px;
+            flex: 1;
+        }
+
+        .description {
+            flex: 1;
+            text-align: left;
+        }
+
+        .Description-Titel {
+            color: #6ac4d5;
+        }
+
+        .Description-Text {
+            color: #c8c8c8;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: #007bff;
+            color: rgb(212, 212, 212);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .details-btn.active {
+            background: #007bff;
+            /* brighter active color */
+            color: rgba(245, 227, 227, 0.483);
+            ;
+        }
+
+        .details-btn:hover {
+            background: #21b300;
+        }
+
+        /* Contact */
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord copy */
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333333bd;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="../imgs/Gifs/WhisSisClip.mp4" type="video/mp4">
+        your browser does not support the video tag.
+    </video>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav center">
+                <li class="nav-item">
+                </li>
+                <a href="../index.html" class="btn btn-primary">Back to Portfolio</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Other projects
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="Floors.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Floors.png" alt="Project 3">
+                                    <span>Floors</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="AltEgoProject.html">
+                                <div class="project-info">
+                                    <img src="../imgs/AltEgoMain.png">
+                                    <span>AltEgoProject</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">
+                                <div class="project-info">
+                                    <img src="../imgs/game_poster_edit.png">
+                                    <span class="custom-color">currently on</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="VideoReality.html">
+                                <div class="project-info">
+                                    <img src="../imgs/VideoReality.png">
+                                    <span>VideoReality</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="LittleJumper.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Platformer.png">
+                                    <span>LittleJumper</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="Kuru-Kuru.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Kuru Kuru.png">
+                                    <span>Kuru Kuru</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="DungeonShooter.html">
+                                <div class="project-info">
+                                    <img src="../imgs/DungeonShooter.png">
+                                    <span>DungeonShooter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>WhisSis</h1>
+            <p>VR-shooter</p>
+        </div>
+    </section>
+
+    <!-- Tags-->
+    <div class="sliding-container-bar">
+        <div class="sliding-tags-container">
+            <div class="sliding-tags">
+                <div class="tags-wrapper">
+                    <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/VR.png" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">3 Devs</span>
+                    <!-- Duplicates -->
+                    <span class="tagTime translatable-text" data-key="Time-Tag-4">4 weeks</span>
+                    <span><img src="../imgs/Icons/Unity.png" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/VR.png" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">3 Devs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Section -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- My Work -->
+            <h2 class="MyWork-Titel translatable-text" data-key="MyWork">My Work</h2>
+            <div class="container">
+                <div class="work-section" id="work1">
+                    <div class="video-container" onclick="toggleDetails('details1')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/cHQ2ZoPUXuk?si=D3k6Nb5zbuABbtMv"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details1')">Show Details</button>
+                    <div class="details-section" id="details1">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code calss="language-csharp">    public void shoot()//shoot them!!!
+    {
+        if (checkAmmo() && slidePulledBack)
+        {
+            audioSource.PlayOneShot(shotSound);
+            muzzleFlashParticles.Play();
+            spawnEject(casingPrefab);
+            //Debug.Log("Bang");
+            //_pistolRigdigbody.AddTorque(0f, 0f, _knockBack);
+            // add some force to the slide to simulate recoil
+            StartCoroutine(slideBack());
+            Ray ray = new Ray(muzzle.position, muzzle.forward);
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+
+                if (checkTag(enemyTags, hit.transform.tag))//it will always spawn a hit decal
+                {
+                    Vector3 decalPosition = hit.point + hit.normal * decalOffset;
+                    GameObject decal = Instantiate(enemyHitPrefab, decalPosition, Quaternion.LookRotation(hit.normal));
+                    hit.transform.GetComponent-AIManager-().TakeDamage(damage);
+                }
+                else if (hit.transform.CompareTag("StartButton"))
+                {
+                    //Debug.Log("Found Start");
+                    hit.transform.GetComponent-Shootablebuttons-().StartButton();
+                }
+                else if (hit.transform.CompareTag("CreditsButton"))
+                {
+                    //Debug.Log("Found Cred");
+                    hit.transform.GetComponent-Shootablebuttons-().CreditsButton();
+                }
+                else if (hit.transform.CompareTag("QuitButton"))
+                {
+
+                    hit.transform.GetComponent-Shootablebuttons-().QuitButton();
+                }
+                else
+                {
+                    Vector3 decalPosition = hit.point + hit.normal * decalOffset;
+                    GameObject decal = Instantiate(decalPrefab, decalPosition, Quaternion.LookRotation(hit.normal));
+                }//else is for a burnmark // now a place holder
+            }
+
+            // debug ray
+            //Debug.DrawRay(muzzle.position, muzzle.forward * 100, Color.red, 2);
+        }
+        else
+        {
+            slidePulledBack = false;
+            audioSource.PlayOneShot(dryFireSound);
+            //Debug.Log("No ammo");//oops no ammo
+        }
+    }
+
+    IEnumerator rotateTrigger()//moves trigger for trigger pull
+    {
+        trigger.transform.Rotate(-5, 0, 0);
+        yield return new WaitForSeconds(triggerTime);
+        trigger.transform.Rotate(5, 0, 0);
+    }
+
+    IEnumerator slideBack()//set slide back values for simulated pushback
+    {
+        slideJoint.targetPosition = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(slidePullBackSpeed);
+        slideJoint.targetPosition = new Vector3((slidePullBackDistance * 2), 0, 0);
+    }
+
+    public void addMagazine()//add magazine
+    {
+        //Debug.Log("Adding magazine");
+        audioSource.PlayOneShot(addMagazineSound);
+        isMagLoaded = true;
+    }
+
+    public void removeMagazine()//remove magazine
+    {
+        //Debug.Log("Remove magazine");
+        audioSource.PlayOneShot(dropMagazineSound);
+        isMagLoaded = false;
+    }
+
+    private bool checkAmmo()//check ammo
+    {
+        if (Bullets > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void setSlideConfig(float offSet)//slide configs
+    {
+        slideJoint.connectedAnchor = new Vector3(0, 0, (offSet * -1));
+        slideJoint.linearLimit = new SoftJointLimit { limit = offSet };
+        slideJoint.targetPosition = new Vector3((offSet * 2), 0, 0);
+    }
+
+    private void spawnEject(GameObject spawn)//spawn eject
+    {
+        Bullets--;
+        GameObject eject = Instantiate(spawn, casingExitPoint.position, casingExitPoint.rotation);
+        Rigidbody rb = eject.GetComponent-Rigidbody-();
+        rb.AddForce(casingExitPoint.forward * 2, ForceMode.Impulse);
+        rb.AddTorque(Random.insideUnitSphere * 2, ForceMode.Impulse);
+    }
+
+    private bool checkTag(string[] tags, string tag)//check tag
+    {
+        for (int i = 0; i < tags.Length; i++)
+        {
+            if (tag == tags[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    void getRefs() => slideJoint = slide.GetComponent-ConfigurableJoint-();
+                                    </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText1"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-section" id="work2">
+                    <div class="video-container" onclick="toggleDetails('details2')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/cHQ2ZoPUXuk?si=qQBH2VLB9L2fpqCM&amp;start=69"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details2')">Show Details</button>
+                    <div class="details-section" id="details2">
+                        <div class="details-content">
+                            <div class="code-example">
+                                <pre><code class="language-csharp">    private void Update()
+    {
+        if (isPinPulled == true && IsGrabbed == false && _fuzeIgnited == false)//check for the right conditions
+        {
+            coroutine = Fuze(3.6f);
+            StartCoroutine(coroutine);
+            _fuzeIgnited = true;
+        }
+        if (_fuzeIgnited)//trows away the clip upon fuze ignited
+        {
+            _clip.transform.parent = _deParenter.transform.parent;
+            _deParenter.gameObject.GetComponent-DeParenter-().Detatch();
+            _clip.gameObject.GetComponent-MeshCollider-().enabled = true;
+            _clip.GetComponent-Rigidbody-().isKinematic = false;
+            _clip.GetComponent-Rigidbody-().AddForce(0.2f, 0.2f, 10, ForceMode.Impulse);
+        }
+    }
+
+    void SetPressed(InputAction.CallbackContext context)//with custom button fucntion
+    {
+        if (IsGrabbed && isPinPulled)//force fuze ignite when holding
+        {
+            //Debug.Log("A button pressed");
+            if (_fuzeIgnited == false)
+            {
+                coroutine = Fuze(_fuzeTime);
+                StartCoroutine(coroutine);
+                _fuzeIgnited = true;
+            }
+        }
+    }
+
+    public void PinPulled()
+    {
+        isPinPulled = true;
+        _granadePinRelease.Play();
+    }
+
+    IEnumerator Fuze(float fuzeTime)//fuze timer //wait x seconds
+    {
+        _granadeClipRelease.Play();
+        float radius = 5;
+        yield return new WaitForSeconds(fuzeTime);
+        Vector3 center = GranadePos.position;
+        Explode(center, radius);
+    }
+
+    void Explode(Vector3 center, float radius)//explode
+    {
+        _granadeExplosion.Play();
+        _explosion.Play();
+        foreach (var gameObject in _GameObject)//foreach loop to disable all mesh off the object
+            gameObject.GetComponent-MeshRenderer-().enabled = false;
+
+        _granadeParent.GetComponent-Rigidbody-().isKinematic = true;
+        _granadeParent.GetComponent-Rigidbody-().useGravity = false;
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        foreach (var hitCollider in hitColliders)//take damage and or rigidbody
+        {
+            if (hitCollider.GetComponent-Rigidbody-())
+            {
+                if (hitCollider.CompareTag("Enemy"))
+                {
+                    hitCollider.GetComponent-AIManager-().TakeDamage(_granadeDamage);
+                }
+                hitCollider.GetComponent-Rigidbody-().AddExplosionForce(_explosionForce, transform.position, _explosionRadius, _upwardsModifier, ForceMode.Impulse);
+            }
+        }
+        StartCoroutine(Destroy());
+    }
+                                    </code></pre>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText2"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the game -->
+            <h2 class="AboutTheGame-Titel translatable-text" data-key="AboutTheGame">About the game</h2>
+            <div class="AboutTheGame-Text-Container">
+                <div class="AboutTheGame-Text translatable-text" data-key="AboutTheGameText"> </div>
+            </div>
+
+            <!-- Technique -->
+            <h2 class="Technique-Titel translatable-text" data-key="Technique">Technique</h2>
+            <div class="Technique-Text-Container">
+                <div class="Technique-Text translatable-text" data-key="TechniqueText"> </div>
+            </div>
+
+            <!-- Gallery -->
+            <h2 class="Gallery translatable-text" data-key="Gallery">Gallery</h2>
+            <!-- Horizontal Image Carousel -->
+            <div class="image-slider-container">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../imgs/Whissis1.png" class="d-block w-100" alt="Screenshot 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/WhisSis2.png" class="d-block w-100" alt="Screenshot 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/Whissis3.png" class="d-block w-100" alt="Screenshot 3">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/Whissis4.png" class="d-block w-100" alt="Screenshot 4">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/Whissis5.png" class="d-block w-100" alt="Screenshot 4">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/Whissis6.png" class="d-block w-100" alt="Screenshot 4">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            function toggleDetails(id) {
+                const section = document.getElementById(id);
+                const button = section.previousElementSibling; // assumes button is right before details
+
+                const isOpen = section.classList.toggle("open");
+                button.classList.toggle("active", isOpen);
+
+                // Optional: change button text
+                if (isOpen) {
+                    button.textContent = "Hide Details";
+                } else {
+                    button.textContent = "Show Details";
+                }
+            }
+
+            const translations = {
+                en: {
+                    "Project-Tag": "Strange hardware project",
+                    "Time-Tag-4": "4 weeks",
+                    "MyWork": "My work",
+                    "ShowDetails-btn": "Show Details",
+                    "Description": "Description",
+                    "DescriptionText1": `This script is a lot to unpack, but I'll explain it real quick.
+                    Once you shoot, the script checks if you have enough bullets. If you hit something it checks the tag, if it's an enemy - do damage. If you hit something like "UI" it interacts with that by activating the script on it. This is because we deigned our menu to be interacted with the gun.
+                    
+                    Most of the functions below keep the gun from firing when it can't. There are also some to active other's outside or inside this script for effects.`,
+                    "DescriptionText2": `A lot to unpack again. But this one I realy like.
+                    Update checks if it can ignite. If it can, it will dispose of the clip and set a variable so that it can't start a nother fuze.
+                    SetPressed is a forced pin release. this is when you want to cook the granade.
+                    PinPulled is for audio.
+                    Fuze is the coroutine that counts down the timer to explode.
+                    And finaly Explode, wich is abvious right? It play's effects, makes a shpere cast to push every object or do damage with oplosion. And destroy's it self when done.`,
+                    "AboutTheGame": "About the game",
+                    "AboutTheGameText": `Feeling like a space shooter, your goal is to collect scrap on an abandent space facility. Unbeknownst to you there was an experiment gone wrong in this facility and creepy mechanical bugs are walking around. Luckily these offer a great source of scrap. With scrap you can upgrade weapons you've found while scavaging and do even more to go deeper in the facility.... `,
+                    "Technique": "Technique",
+                    "TechniqueText": `This game is made with unity and developed in combination with a quest 2 VR-Headset. There is no extra hardware besides the VR component but ofcourse there is a possibility to expand. `,
+                    "Gallery": "Gallery",
+                },
+                nl: {
+                    "Project-Tag": "Vreemde hardware project",
+                    "Time-Tag-4": "4 weken",
+                    "MyWork": "Mijn werk",
+                    "ShowDetails-btn": "Details weergeven",
+                    "Description": "Beschrijving",
+                    "DescriptionText1": `Dit script is best veel om uit te leggen, maar het mag wel de beste wapen script zijn.
+Zodra je schiet, checkt het script of je genoeg kogels hebt. Als je iets raakt, kijkt het naar de tag, is het een vijand dan doe je damage. Als je iets raakt zoals “UI”, dan wordt er mee geïnteracteerd door het script erop te activeren. Dit komt omdat we ons menu hebben ontworpen om met het wapen te bedienen.
+
+De meeste functies hieronder zorgen ervoor dat het wapen niet kan vuren als dat niet mag. Er zitten ook een paar tussen die andere dingen activeren, binnen of buiten dit script, voor effecten.`,
+                    "DescriptionText2": `Weer veel om uit te leggen, maar de granaat script vind ik echt leuk.
+
+Update checkt of hij kan ontsteken.
+Als dat kan, gooit hij het clipje weg en zet een variabele zodat er niet nog een lont gestart kan worden.
+SetPressed is een geforceerde pin-release, dit gebruik je als je de granaat wilt “cooken”. PinPulled is voor audio. Fuze is de coroutine die de timer aftelt tot de explosie. En tot slot Explode, spreekt voor zich toch?
+Die speelt effecten af, maakt een sphere cast om objecten weg te duwen of damage te doen met de explosie, en vernietigt zichzelf daarna`,
+                    "AboutTheGame": "Over het spel",
+                    "AboutTheGameText": `Het voelt als een space shooter, jouw doel is om schroot te verzamelen in een verlaten ruimtestation.
+Wat je niet weet, is dat er in deze faciliteit een experiment is misgegaan,
+en nu lopen er enge, mechanische insecten rond.
+Gelukkig leveren die een geweldige bron van schroot op.
+
+Met dat schroot kun je wapens upgraden die je tijdens het zoeken hebt gevonden,
+en nog meer doen om dieper de faciliteit in te gaan...`,
+                    "Technique": "Techniek",
+                    "TechniqueText": `Deze game is gemaakt met Unity en ontwikkeld in combinatie met een Quest 2 VR-headset.
+Er is geen extra hardware naast het VR-gedeelte, maar natuurlijk is er wel de mogelijkheid om uit te breiden.`,
+                    "Gallery": "Gallerij",
+                }
+            };
+
+            function setLanguage(lang) {
+                const langData = translations[lang];
+                if (!langData) return;
+
+                // Translate unique IDs
+                for (const id in langData) {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = langData[id];
+                }
+
+                // Translate tags with classes and data-key
+                document.querySelectorAll(".translatable-text").forEach(el => {
+                    const key = el.getAttribute("data-key");
+                    if (langData[key]) {
+                        el.innerText = langData[key];
+                    }
+                });
+
+                localStorage.setItem("language", lang);
+            }
+            // Auto-load the preferred language on page load
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+                setLanguage(savedLanguage);
+            });
+
+            //Discord clipboard
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const notification = document.getElementById('copy-notification');
+                    notification.classList.add('show');
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 2000); // Hide after 2 seconds
+                });
+            }
+        </script>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <a href="mailto:matthewklijnstra@gmail.com">
+            <img src="../imgs/Icons/Email.png" alt="Email" class="contact-icon">
+        </a>
+        <img src="../imgs/Icons/Discord.png" alt="Discord" class="contact-icon"
+            onclick="copyToClipboard('mattgames2667')">
+        <a href="https://www.linkedin.com/in/matthew-klijnstra-113734357/" target="_blank">
+            <img src="../imgs/Icons/LinkedIn.png" alt="LinkedIn" class="contact-icon">
+        </a>
+        <!-- copy for discord -->
+        <div id="copy-notification" class="copy-toast">Copied to clipboard!</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

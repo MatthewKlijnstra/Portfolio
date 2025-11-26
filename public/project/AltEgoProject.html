@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alt Ego</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ============================= */
+        /*             Base              */
+        /* ============================= */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #323232;
+            color: #c6c6c6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #007bff8a, #0057b3a8);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 50px 50px 50px 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .content-section {
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: #007bff74;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+
+
+        footer {
+            background: #0080ff7a;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            margin-top: 50px;
+        }
+
+        .collapse {
+            margin-left: 100px;
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-item .project-info {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dropdown-item:hover .project-info {
+            transform: translateX(10px);
+        }
+
+        .dropdown-item:hover {
+            color: #959595;
+        }
+
+        .custom-color {
+            color: #008b09ba;
+        }
+
+        .custom-color:hover {
+            color: rgba(226, 2, 2, 0.451);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Horizontal Slider */
+        .image-slider {
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 10px 0;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .slider {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .slider-image {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slider-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================= */
+        /*           carousel            */
+        /* ============================= */
+        .image-slider-container {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 1%;
+            border-radius: 30px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #1f8bef;
+            box-shadow: 0px 2px 15px rgba(174, 174, 174, 0.571);
+            background-color: #2b2b2bd5;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            width: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        /* ============================= */
+        /*             Tags              */
+        /* ============================= */
+        .sliding-tags-container {
+            margin: auto;
+            width: 230px;
+        }
+
+        .sliding-container-bar {
+            width: auto;
+        }
+
+        .sliding-tags {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #6f4e17a9;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+
+        .tags-wrapper {
+            display: inline-block;
+            animation: slide 10s linear infinite;
+            /* Adjust the duration as needed */
+        }
+
+
+        @keyframes slide {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-50.4%);
+                /* Adjust based on content */
+            }
+        }
+
+        .sliding-tags:hover .tags-wrapper {
+            animation-play-state: paused;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tagTime {
+            background-color: #5ba29a;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngine {
+            background-color: #5FA8D3;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagEngineIMGUnity {
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .tagEngineIMGUnreal {
+            min-width: 45px;
+            max-width: 50px;
+        }
+
+
+        .tagPlatform {
+            background-color: #1c2424;
+            color: white;
+            padding: 0px 5px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tagPlatformIMG {
+            min-width: 30px;
+            max-width: 40px;
+            max-height: 30px;
+            margin: 0px;
+        }
+
+        .tagPeople {
+            background-color: #344966;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            max-height: 30px;
+        }
+
+        .tags img {
+            vertical-align: middle;
+        }
+
+        /* ============================= */
+        /*         Descriptions          */
+        /* ============================= */
+        .Technique-Titel {
+            color: #4EA5D9;
+        }
+
+        .Technique-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .Technique-Text {
+            color: #dfdfdfd2;
+        }
+
+        .MyWork-Titel {
+            Color: #66D7D1;
+        }
+
+        .MyWork-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .MyWork-Text {
+            color: #dfdfdfd2;
+        }
+
+        .AboutTheGame-Titel {
+            color: #6DB1BF;
+        }
+
+        .AboutTheGame-Text-Container {
+            margin: 0px 16px 0px 16px;
+            padding: 1%;
+            background-color: #4848488f;
+            border-radius: 12px 12px 12px 12px;
+        }
+
+        .AboutTheGame-Text {
+            color: #dfdfdfd2;
+        }
+
+        .Gallery {
+            color: #2191FB;
+        }
+
+        /* ============================= */
+        /*         Show my work          */
+        /* ============================= */
+        .work-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #324354c2;
+            padding: 0 20px;
+            /* Start with minimal padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .details-section.open {
+            max-height: 1000px;
+            background-color: rgb(109, 109, 111);
+            /* large enough for content */
+            opacity: 1;
+            padding: 20px;
+        }
+
+        .code-example {
+            background: #1e1e1e;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+            font-size: 1.1rem;
+            max-height: 300px;
+            flex: 1;
+        }
+
+        .description {
+            flex: 1;
+            text-align: left;
+        }
+
+        .Description-Titel {
+            color: #6ac4d5;
+        }
+
+        .Description-Text {
+            color: #c8c8c8;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: #007bff;
+            color: rgb(212, 212, 212);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .details-btn.active {
+            background: #007bff;
+            /* brighter active color */
+            color: rgba(245, 227, 227, 0.483);
+            ;
+        }
+
+        .details-btn:hover {
+            background: #21b300;
+        }
+
+        /* ============================= */
+        /*         Image Snippet         */
+        /* ============================= */
+
+        .bp-image-container {
+            position: relative;
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .bp-title {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .bp-image {
+            width: auto;
+            height: auto;
+        }
+
+        /* Contact */
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord copy */
+
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333333bd;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+
+        /*  BP extra    */
+        .bp-render {
+            width: 100%;
+            max-width: 1000px;
+            /* optional cap */
+            height: 95%;
+            border: none;
+            border-radius: 12px;
+            /* spacing and centering */
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-pill mt-3 shadow">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav center">
+                <li class="nav-item">
+                </li>
+                <a href="../index.html" class="btn btn-primary">Back to Portfolio</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Other projects
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="Floors.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Floors.png">
+                                    <span>Floors</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">
+                                <div class="project-info">
+                                    <img src="../imgs/AltEgoMain.png">
+                                    <span class="custom-color">currently on</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="WhisSis.html">
+                                <div class="project-info">
+                                    <img src="../imgs/game_poster_edit.png">
+                                    <span>WhisSis</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="VideoReality.html">
+                                <div class="project-info">
+                                    <img src="../imgs/VideoReality.png">
+                                    <span>VideoReality</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="LittleJumper.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Platformer.png">
+                                    <span>LittleJumper</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="Kuru-Kuru.html">
+                                <div class="project-info">
+                                    <img src="../imgs/Kuru Kuru.png">
+                                    <span>Kuru Kuru</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="DungeonShooter.html">
+                                <div class="project-info">
+                                    <img src="../imgs/DungeonShooter.png">
+                                    <span>DungeonShooter</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AltEgoProject</h1>
+            <p>HLO Project</p>
+        </div>
+    </section>
+
+    <!-- Tags-->
+    <div class="sliding-container-bar">
+        <div class="sliding-tags-container">
+            <div class="sliding-tags">
+                <div class="tags-wrapper">
+                    <span class="tagTime translatable-text" data-key="Time-Tag-4"></span>
+                    <span><img src="../imgs/Icons/Unreal.jpg" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/VR.png" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">3 Devs</span>
+                    <!-- Duplicates-->
+                    <span class="tagTime translatable-text" data-key="Time-Tag-4"></span>
+                    <span><img src="../imgs/Icons/Unreal.jpg" alt="Engine Icon" class="tagEngine tagEngineIMG"></span>
+                    <span><img src="../imgs/Icons/VR.png" class="tagPlatform tagPlatformIMG"></span>
+                    <span class="tagPeople">3 Devs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Section -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- My Work -->
+            <h2 class="MyWork-Titel translatable-text" data-key="MyWork">My Work</h2>
+            <div class="container">
+                <div class="work-section" id="work1">
+                    <div class="video-container" onclick="toggleDetails('details1')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/Q2woZY6K7U4?si=4Q70ElVxBm9cpsi9"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details1')">Show Details</button>
+                    <div class="details-section" id="details1">
+                        <div class="details-content">
+                            <div class="bp-image-container">
+                                <!-- <div id="bpCarousel1" class="carousel slide" data-bs-ride="carousel1">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="../imgs/Snippets/AltEgo/RevolverShootingSystem1.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/RevolverShootingSystem2.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/RevolverShootingSystem3.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/RevolverShootingSystem4.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/RevolverShootingSystem5.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/RevolverShootingSystem6.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        Add more images as needed
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#bpCarousel1"
+                                        data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#bpCarousel1"
+                                        data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div> -->
+                                <iframe class="bp-render" src="https://blueprintue.com/render/xg9nu93q/" scrolling="no"
+                                    allowfullscreen></iframe>
+                            </div>
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText1"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-section" id="work2">
+                    <div class="video-container" onclick="toggleDetails('details2')">
+                        <iframe width="100%" height="450"
+                            src="https://www.youtube.com/embed/zJQHt1eaK1A?si=U-p-O2r0UdiQYZeq"
+                            title="YouTube video player" frameborder="
+                            title=" YouTube video player" frameborder=""
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <button class="details-btn translatable-text" data-key="ShowDetails-btn"
+                        onclick="toggleDetails('details2')">Show Details</button>
+                    <div class="details-section" id="details2">
+                        <div class="details-content">
+                            <div class="bp-image-container">
+                                <!-- <div id="bpCarousel2" class="carousel slide" data-bs-ride="carousel2">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="../imgs/Snippets/AltEgo/TargetTimelineBP1.png"
+                                                class="d-block w-100" alt="Blueprint 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/TargetTimelineBP2.png"
+                                                class="d-block w-100" alt="Blueprint 2">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="../imgs/Snippets/AltEgo/TargetTimelineBP3.png"
+                                                class="d-block w-100" alt="Blueprint 3">
+                                        </div>
+                                        Add more images as needed
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#bpCarousel2"
+                                        data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#bpCarousel2"
+                                        data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div> -->
+                                <iframe class="bp-render" src="https://blueprintue.com/render/t9j3_rkf/" scrolling="no"
+                                    allowfullscreen></iframe>
+                            </div>
+
+                            <div class="description">
+                                <h3 class="Description-Titel translatable-text" data-key="Description">oops something
+                                    whent wrong, reload
+                                    the page</h3>
+                                <p class="Description-Text translatable-text" data-key="DescriptionText2"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About the game -->
+            <h2 class="AboutTheGame-Titel translatable-text" data-key="AboutTheGame">About the game</h2>
+            <div class="AboutTheGame-Text-Container">
+                <div class="AboutTheGame-Text translatable-text" data-key="AboutTheGameText"> </div>
+            </div>
+
+            <!-- Technique -->
+            <h2 class="Technique-Titel translatable-text" data-key="Technique">Technique</h2>
+            <div class="Technique-Text-Container">
+                <div class="Technique-Text translatable-text" data-key="TechniqueText"> </div>
+            </div>
+
+            <!-- Gallery -->
+            <h2 class="Gallery translatable-text" data-key="Gallery">oops something whent wrong, reload the page</h2>
+            <!-- Horizontal Image Carousel -->
+            <div class="image-slider-container">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../imgs/AltEgo1.png" class="d-block w-100" alt="Screenshot 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/AltEgo2.png" class="d-block w-100" alt="Screenshot 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/AltEgo3.png" class="d-block w-100" alt="Screenshot 3">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            function toggleDetails(id) {
+                const section = document.getElementById(id);
+                const button = section.previousElementSibling; // assumes button is right before details
+
+                const isOpen = section.classList.toggle("open");
+                button.classList.toggle("active", isOpen);
+
+                // Optional: change button text
+                if (isOpen) {
+                    button.textContent = "Hide Details";
+                } else {
+                    button.textContent = "Show Details";
+                }
+            }
+
+            const translations = {
+                en: {
+                    "Project-Tag": "Strange hardware project",
+                    "Time-Tag-4": "4 weeks",
+                    "MyWork": "My work",
+                    "ShowDetails-btn": "Show Details",
+                    "Description": "Description",
+                    "DescriptionText1": `My personal best weapon I've made so fa. 
+                    
+                    Made with the base of the unreal engine template gun, I upgraded it with audio & visual effects. Offcourse I also made a reload function to make the game flow feel better. 
+                    
+                    Most of the pictures speak for them selves, but the reload is the what more complicated one. Once a bullet enters the reload box, a few things happen. First it makes a simple check for the correct tag. After that it checks if there is room for another bullet, making sure the bullet count doesn't go above the max count. Once that's all done it adds it to the count, spawns a sound effect, deletes the model and checks the round count again. 
+                    
+                    The last check is to update the models in the cylinder of the gun, I can't have an unrealistic gun on my watch ;)`,
+                    "DescriptionText2": `The target system is a very important part here. Because of the games cycle being focused on the targets, they had to have some extra functions to flow extra smooth.
+                    
+                    For every new round, new targets randomly go up. This also sets the amount of targets to be shot this round. If a target gets hit, it counts 1 to the hit variable. 
+                    If all the bullets in the current round, say for example 3 are shot. And only 1 target is hit, the targets left to be shot is the amount of bullets the player gets again. 
+                    
+                    This makes every round impossible to fail making the player follow a forced storyline.`,
+                    "AboutTheGame": "About the game",
+                    "AboutTheGameText": `A VR-experience played as a mid teens girl called marico, who has a lot of big things ahead and anxiety about failing them.
+                    The world you play in for about 5 to 10 minuts is just a dream. The stress and anxiety of marico created this dream to prepare for the big new world. Once you start you are greeted by a show host. This show host explains the game rules for you, now what is the game actualy? It's a classic carnical type shooting game. 5 rounds with each round adding 1 target to the count. Only one thing though, you can't actualy lose. This is part of the game feel and what's meant to be brought over to the player. `,
+                    "Technique": "Technique",
+                    "TechniqueText": `For this project there was an interesting parameter to meet. During this project we had to work together with students from a film acadamy. And not only did we have to work in unreal, we also had to work together with their skills to make this VR-experience filled with motion capturing including facial captures, audio designs and 3D scans of certain models for a more realistic experience. This was a challange to meet, and good way to test out skills to work with new tech for the first time. But the results show that it was a job well done`,
+                    "Gallery": "Gallery",
+                },
+                nl: {
+                    "Project-Tag": "Vreemde hardware project",
+                    "Time-Tag-4": "4 weken",
+                    "MyWork": "Mijn werk",
+                    "ShowDetails-btn": "Details weergeven",
+                    "Description": "Beschrijving",
+                    "DescriptionText1": `Mijn persoonlijke beste wapen dat ik tot nu toe heb gemaakt.
+
+Gemaakt op basis van het Unreal Engine-template wapen, heb ik het geüpgraded met audio- en visuele effecten.
+Natuurlijk heb ik ook een herlaadfunctie toegevoegd om de game-flow beter te laten aanvoelen.
+
+De meeste foto's spreken voor zich, maar het herladen is wat ingewikkelder.
+Zodra een kogel de reload-box binnenkomt, gebeuren er een paar dingen.
+Eerst doet het een simpele check op de juiste tag. Daarna controleert het of er nog ruimte is voor een extra kogel, zodat het aantal kogels niet boven het maximum komt.
+Als dat allemaal klopt, wordt de kogel aan de telling toegevoegd, speelt er een geluidseffect af, wordt het model verwijderd en wordt het aantal kogels opnieuw gecheckt.
+
+De laatste check is om de modellen in de cilinder van het wapen bij te werken. 
+ik maak geen onrealistische wapens ;) `,
+                    "DescriptionText2": `Het target-systeem is hier een heel belangrijk onderdeel.
+Omdat de game-cyclus draait om de targets, moesten die wat extra functies krijgen om alles soepel te laten verlopen.
+
+Voor elke nieuwe ronde gaan er willekeurig nieuwe targets omhoog.
+Dit bepaalt ook meteen hoeveel targets er deze ronde geraakt moeten worden.
+Als een target geraakt wordt, telt dat als 1 bij de hit-variabele.
+
+Als alle kogels in de huidige ronde — bijvoorbeeld 3 — zijn afgevuurd en er is maar 1 target geraakt,
+dan is het aantal overgebleven targets gelijk aan het aantal kogels dat de speler opnieuw krijgt.
+
+Dit maakt het onmogelijk om een ronde te falen, waardoor de speler een geforceerde verhaallijn blijft volgen.
+ `,
+                    "AboutTheGame": "Over het spel",
+                    "AboutTheGameText": ` Een VR-ervaring waarin je speelt als een meisje van midden tienerleeftijd genaamd Marico,
+die veel grote dingen te wachten staat en angst heeft om daarin te falen.
+
+De wereld waarin je speelt — zo’n 5 tot 10 minuten — is slechts een droom.
+De stress en angst van Marico hebben deze droom gecreëerd om zich voor te bereiden op de grote nieuwe wereld.
+Zodra je begint, word je verwelkomd door een showhost.
+Deze showhost legt de spelregels aan je uit. Maar wat is het spel eigenlijk?
+Het is een klassiek kermisachtig schietspel. 5 rondes waarbij elke ronde 1 target toevoegt aan het totaal.
+
+Er is alleen één ding — je kunt eigenlijk niet verliezen.
+Dit hoort bij de beleving van het spel en is wat de speler moet voelen. `,
+                    "Technique": "Techniek",
+                    "TechniqueText": `Voor dit project was er een interessante eis om aan te voldoen.
+Tijdens dit project moesten we samenwerken met studenten van een filmacademie.
+En niet alleen moesten we werken in Unreal, we moesten ook gebruik maken van hun vaardigheden om deze VR-ervaring te vullen met motion capturing — inclusief gezichtsopnames, audiodesign en 3D-scans van bepaalde modellen voor een realistischere beleving.
+
+Het was een uitdaging om dit voor elkaar te krijgen,
+maar ook een goede manier om onze vaardigheden te testen met nieuwe technologieën die we voor het eerst gebruikten.
+En het resultaat laat zien dat het een goed uitgevoerde klus was.`,
+                    "Gallery": "Gallerij",
+                }
+            };
+
+            function setLanguage(lang) {
+                const langData = translations[lang];
+                if (!langData) return;
+
+                // Translate unique IDs
+                for (const id in langData) {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = langData[id];
+                }
+
+                // Translate tags with classes and data-key
+                document.querySelectorAll(".translatable-text").forEach(el => {
+                    const key = el.getAttribute("data-key");
+                    if (langData[key]) {
+                        el.innerText = langData[key];
+                    }
+                });
+
+                localStorage.setItem("language", lang);
+            }
+            // Auto-load the preferred language on page load
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedLanguage = localStorage.getItem("language") || "en"; // Default to English
+                setLanguage(savedLanguage);
+            });
+
+            //Discord clipboard
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const notification = document.getElementById('copy-notification');
+                    notification.classList.add('show');
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 2000); // Hide after 2 seconds
+                });
+            }
+        </script>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <a href="mailto:matthewklijnstra@gmail.com">
+            <img src="../imgs/Icons/Email.png" alt="Email" class="contact-icon">
+        </a>
+        <img src="../imgs/Icons/Discord.png" alt="Discord" class="contact-icon"
+            onclick="copyToClipboard('mattgames2667')">
+        <a href="https://www.linkedin.com/in/matthew-klijnstra-113734357/" target="_blank">
+            <img src="../imgs/Icons/LinkedIn.png" alt="LinkedIn" class="contact-icon">
+        </a>
+        <!-- copy for discord -->
+        <div id="copy-notification" class="copy-toast">Copied to clipboard!</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
