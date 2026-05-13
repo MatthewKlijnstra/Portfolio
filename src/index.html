@@ -919,7 +919,7 @@ Dit portfolio is gemaakt met HTML, CSS en JavaScript, dus je zou kunnen zeggen d
         function closeWelcome() {
             const popup = document.getElementById("welcome-popup");
             popup.classList.remove("active");
-            localStorage.setItem("welcomeShown", "true"); // remember that it's been shown
+            // localStorage.setItem("welcomeShown", "true"); no need for this anymore, redirecting
         }
 
         window.addEventListener("load", () => {
